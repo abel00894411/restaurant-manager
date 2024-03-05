@@ -1,0 +1,2 @@
+En este paquete se encontraran las clases que representaran las entidades de nuestro diagrama entidad relacion, son clases pojo que solamente se utilizan para
+poblar de informacion de la base de datos
