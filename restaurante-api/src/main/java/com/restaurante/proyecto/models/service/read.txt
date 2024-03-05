@@ -1,0 +1,2 @@
+En este paquete se crearan las clases de servicios, una clase de servicio realizará acciones en conjunto con los repositorios y otros componentes
+para crear y dar el funionamiento de la aplicacion (logica de negocio)
