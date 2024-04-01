@@ -46,7 +46,8 @@ public class UsuarioController {
 		List<Object[]> resultado = usuarioService.obtenerPorId(id);
 		
 		Map<String, Object> response = new HashMap<String, Object>();
-		
+		Map<String, Object> responseBody = new HashMap<String, Object>();
+
 		for(Object[] obj : resultado) {
 			response.put("id", obj[0]);
 			response.put("nombre", obj[1]);
@@ -56,7 +57,8 @@ public class UsuarioController {
 			response.put("sueldo", obj[5]);
 			response.put("fechaContratacion", obj[6]);
 		}
+		responseBody.put("usuario", response);
 		
-		return ResponseEntity.ok(response);
+		return ResponseEntity.ok(responseBody);
 	}
 }
