@@ -1,6 +1,12 @@
 package com.restaurante.proyecto.services;
 
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +18,6 @@ import com.restaurante.proyecto.repositories.ICocineroRepository;
 import com.restaurante.proyecto.repositories.IEmpleadoRepository;
 import com.restaurante.proyecto.repositories.IMeseroRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -29,21 +34,36 @@ public class UsuarioService {
 	private ICocineroRepository cocineroRepository;
 	
 	
-	@Transactional // tengo entendido que esto es como en base de datos, se ejecuta como una sola transaccion sin importar que tanto hagamos jsjs
-						// pero ya se lo puse arruba del nombre de la clase, lo que aplicará a todos los metodos, nomas para que veas 
-	public List<Empleado> obtenerUsuarios(){
+	@Transactional 
+	public List<EmpleadoResponse> obtenerUsuarios(){
 		
-		return empleadoRepository.findAll();
+		List<EmpleadoResponse> empleados = empleadoRepository.encontrarTodos();
+		
+		return empleados;
 		
 	}
 	
 	
-	public List<Object[]> obtenerPorId(Long id) {
+	public Map<String, Object>  obtenerPorId(Long id) {
+		Map<String, Object> respuesta =  new HashMap<String, Object>();
 		
-		List<Object[]> respuesta = null;
+		List<Object[]> resultado = null;
 
 		try {
-			respuesta = empleadoRepository.encontrarPorId(id);
+			resultado = empleadoRepository.encontrarPorId(id);
+			
+			for(Object[] obj : resultado) {
+				respuesta.put("id", obj[0]);
+				respuesta.put("nombre", obj[1]);
+				respuesta.put("apellido", obj[2]);
+				respuesta.put("puesto", obj[3]);
+				respuesta.put("rfc", obj[4]);
+				respuesta.put("sueldo", obj[5]);
+				respuesta.put("fechaContratacion", 
+						((Date)  obj[6]).toInstant()
+						.atZone(ZoneId.systemDefault()   )
+						.toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))   .toString()  );
+			}
 
 		}catch (Exception e) {
 			System.out.println("Error - usuarioService-obtenerPorId: "+e.getMessage());

@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name ="empleados")
@@ -29,6 +30,7 @@ public class Empleado {
 	
 	private String password;
 	
+	@Column(unique = true)
 	private String rfc;
 	
 	private BigDecimal sueldo;

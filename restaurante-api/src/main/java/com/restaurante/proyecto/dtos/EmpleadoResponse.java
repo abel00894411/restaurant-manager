@@ -1,8 +1,12 @@
 package com.restaurante.proyecto.dtos;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
+
+import com.restaurante.proyecto.models.entity.Empleado;
 
 public record EmpleadoResponse(
 		
@@ -12,8 +16,23 @@ public record EmpleadoResponse(
 		String puesto,
 		String rfc,
 		BigDecimal sueldo,
-		Date fechaContratacion
+		String fechaContratacion
 		
 		) {
+
+	public static EmpleadoResponse createEmpleado(Empleado e) {
+		
+		return new EmpleadoResponse(
+				
+				e.getIdEmpleado(),
+				e.getNombre(),
+				e.getApellido(),
+				"",
+				e.getRfc(),
+				e.getSueldo(),
+				e.getFechaContratacion().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().toString()
+				
+				);
+	}
 
 }
