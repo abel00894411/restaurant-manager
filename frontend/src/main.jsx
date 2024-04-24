@@ -12,44 +12,67 @@ import getTokenData from './util/getTokenData.js';
 const waiterPaths = [
     {
         path: '/',
-        element: <Waiter.Dashboard />
+        element: <Waiter.Dashboard />,
+        display: 'Panel'
     },
     {
         path: '/panel',
-        element: <Waiter.Dashboard />
+        element: <Waiter.Dashboard />,
+        display: 'Panel'
+    },
+    {
+        path: '/menu',
+        element: <Waiter.MenuPage />,
+        display: 'Menú'
+    },
+    {
+        path: '/ordenes',
+        element: <Waiter.OrdersPage />,
+        display: 'Órdenes'
+    },
+    {
+        path: '/perfil',
+        element: <Waiter.ProfilePage />,
+        display: 'Perfil'
     }
 ];
 
 const cookPaths = [
     {
         path: '/',
-        element: <Cook.Dashboard />
+        element: <Cook.Dashboard />,
+        display: 'Panel'
     },
     {
         path: '/panel',
-        element: <Cook.Dashboard />
+        element: <Cook.Dashboard />,
+        display: 'Panel'
     }
 ];
 
 const adminPaths = [
     {
         path: '/',
-        element: <Admin.Dashboard />
+        element: <Admin.Dashboard />,
+        display: 'Panel'
     },
     {
         path: '/panel',
-        element: <Admin.Dashboard />
+        element: <Admin.Dashboard />,
+        display: 'Panel'
     }
 ];
 
 const customerPaths = [
     {
         path: '/',
-        element: <h1>Public index</h1>
+        element: <h1>Public index</h1>,
+        display: 'Panel'
     },
     {
         path: '/menu',
-        element: <Customer.MenuPage />
+        element: <Customer.MenuPage />,
+        display: 'Panel'
     }
 ];
 
@@ -72,7 +95,7 @@ if (!paths) {
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <App token={getTokenData()} />,
+        element: <App token={token} paths={paths} />,
         errorElement: <h1>Error de ruta</h1>,
         children: paths
     }
