@@ -1,5 +1,46 @@
 .navigation {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
     height: 100%;
     width: 100%;
-    background-color: #555;
+    background-color: var(--lighter-gray);
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0, .25);
+}
+
+.navigation__logo-container {
+    margin: auto;
+    width: 90%;
+    height: 80px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--gray);
+}
+
+.navigation__logo-container__logo {
+    width: 100%;
+    height: 100%;
+    background-image: url('/img/logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.navigation__options {
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.navigation__options__option,
+.navigation__options__option--current {
+    font-size: 26;
+    color: inherit;
+    text-decoration: none;
+}
+
+.navigation__options__option--current {
+    font-weight: bold;
 }
