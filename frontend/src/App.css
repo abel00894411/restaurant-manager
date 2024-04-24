@@ -1,6 +1,7 @@
 .employee-layout {
     display: grid;
     grid-template-columns: 240px 1fr;
+    grid-template-rows: 100%;
     width: 100%;
     height: 100%;
 }
@@ -14,4 +15,12 @@ main {
     width: 100%;
     height: 100%;
     background-color: transparent;
+}
+
+
+@media screen and (max-width: 900px) {
+    .employee-layout {
+        grid-template-columns: 100%;
+        grid-template-rows: 64px 1fr;
+    }
 }
