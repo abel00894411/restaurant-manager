@@ -1,3 +1,6 @@
+/**
+ * @returns { object | false }
+ */
 const getTokenData = () => {
     try {
         return JSON.parse(localStorage.getItem('token'));
