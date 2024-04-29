@@ -2,8 +2,11 @@ package com.restaurante.proyecto.models.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -26,7 +29,7 @@ public class Cocinero {
 	@JoinColumn(name="idCocinero")
 	private Empleado idCocinero;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			
 			name = "cocineros_categorias",
@@ -63,7 +66,15 @@ public class Cocinero {
 	
 	
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(!(obj instanceof Cocinero) || obj ==null) {
+			return false;
+		}
+		Cocinero cocinero = (Cocinero)obj;
+		return this.idCocinero.getIdEmpleado().equals(cocinero.getCocineroId());
+	}
 	
 	
 	

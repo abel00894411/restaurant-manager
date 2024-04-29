@@ -53,6 +53,7 @@ public class SecurityConfiguration {
 						.requestMatchers("/app/**").permitAll()
 						.requestMatchers("/topic/**").permitAll()
 						.requestMatchers("/connect/**").permitAll()
+						.requestMatchers("/prueba-empleados-activos").permitAll()
 						.anyRequest().authenticated()
 //						.anyRequest().permitAll()
 					

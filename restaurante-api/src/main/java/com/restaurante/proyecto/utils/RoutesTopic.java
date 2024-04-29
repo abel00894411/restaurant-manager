@@ -6,13 +6,13 @@ import java.util.List;
 public enum RoutesTopic {
 
 	topicOrdenesCreadas("/topic/ordenes/creadas",Arrays.asList("MESERO")),
-	topicOrdenesAsignadasID("/topic/ordenes/asignados",Arrays.asList("MESERO")),
+	topicOrdenesAsignados("/topic/ordenes/asignados",Arrays.asList("MESERO")),
 	topixOrdenesListados("/topic/ordenes/listados",Arrays.asList("MESERO")),
 	topicOrdenesTerminadas("/topic/ordenes/terminadas",Arrays.asList("MESERO")),
 	topicItemsListados("/topic/items/listados",Arrays.asList("COCINERO")),
 	topicItemsAgregados("/topic/items/agregados",Arrays.asList("MESERO")),
 	topicItemsAsignados("/topic/items/asignados",Arrays.asList("COCINERO")),
-	topicItemsActualizaciones("topic/items/actualizaciones",Arrays.asList("MESERO","COCINERO")) // igual duda de su razon de existir
+	topicItemsActualizaciones("/topic/items/actualizaciones",Arrays.asList("MESERO","COCINERO")) // igual duda de su razon de existir
 	
 	;
 	

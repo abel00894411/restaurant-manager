@@ -10,8 +10,9 @@ public enum RoutesApp {
 	appOrdenesEnlistar("/app/ordenes/enlistar",Arrays.asList("MESERO")), //pendiente de disicutir
 	appOrdenesLlenar("/app/ordenes/llenar",Arrays.asList("MESERO")), // duda
 	appOrdenesTerminar("/app/ordenes/terminar",Arrays.asList("MESERO")),
-	appItemsEnlistar("/app/items/enlistar",Arrays.asList("MESERO")),     // pendiente de discutir
+	appItemsEnlistar("/app/items/enlistar",Arrays.asList("COCINERO")),     // pendiente de discutir
 	appItemsActualizar("/app/items/actualizar",Arrays.asList("MESERO","COCINERO")),
+	appConexion("/app/conectar", Arrays.asList("MESERO","COCINERO","ADMINISTRADOR"))
 	
 	;
 	

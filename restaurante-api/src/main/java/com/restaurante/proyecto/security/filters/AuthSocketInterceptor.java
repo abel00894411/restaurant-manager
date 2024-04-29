@@ -1,5 +1,6 @@
 package com.restaurante.proyecto.security.filters;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.stereotype.Component;
 
+import com.restaurante.proyecto.models.entity.User;
 import com.restaurante.proyecto.security.filters.strategiesRequest.IStrategy;
 import com.restaurante.proyecto.services.JwtService;
 
@@ -23,7 +25,11 @@ import io.jsonwebtoken.Jwts;
 public class AuthSocketInterceptor implements ChannelInterceptor{
 
 	private static final String BEARER_PREFIX = "Bearer ";
-	private static final Map<String,String> empleadosActivos = new HashMap<String,String>(); 
+	public static final List<User> empleadosActivos = new ArrayList<User>();
+	public static final List<User> meserosActivos = new ArrayList<User>(); 
+	public static final List<User> cocinerosActivos = new ArrayList<User>();
+	public static final List<User> administradoresActivos = new ArrayList<User>();
+	
 	@Autowired
 	private JwtService jwtService;
 	@Autowired
@@ -60,7 +66,7 @@ public class AuthSocketInterceptor implements ChannelInterceptor{
 		}
 
 		int i = 0;
-		for(String emp : empleadosActivos.keySet()) {
+		for(User emp : empleadosActivos) {
 			System.out.println("id empleado["+i+"}: "+emp);
 			i++;
 		}
@@ -69,14 +75,14 @@ public class AuthSocketInterceptor implements ChannelInterceptor{
 	}
 	
 	
-	private String obtenerId(List<String> authorizationList) {
-		
-		String bearerToken = authorizationList.size() >=0? authorizationList.get(0) : "";
-		String token = bearerToken.replace(BEARER_PREFIX, "");
-		System.out.println("\n\n"+token+"\n\n");
-		return jwtService.extractIdUsuario(token);
-	}
-	
+//	private String obtenerId(List<String> authorizationList) {
+//		
+//		String bearerToken = authorizationList.size() >=0? authorizationList.get(0) : "";
+//		String token = bearerToken.replace(BEARER_PREFIX, "");
+//		System.out.println("\n\n"+token+"\n\n");
+//		return jwtService.extractIdUsuario(token);
+//	}
+//	
 	private boolean manejar(Message<?> message) {
 		
 		boolean band =false;

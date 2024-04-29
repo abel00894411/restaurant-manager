@@ -3,6 +3,8 @@ package com.restaurante.proyecto.models.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +30,7 @@ public class Factura {
 	private Orden orden;
 	
 	@Column(name="fechaEmision")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime fechaEmision;
 	
 	@Column(name="correo" , length = 100)

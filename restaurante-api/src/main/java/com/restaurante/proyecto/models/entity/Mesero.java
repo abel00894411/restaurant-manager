@@ -18,7 +18,7 @@ public class Mesero {
 	private Long meseroId;
 	
 	@MapsId
-	@OneToOne
+	@OneToOne()
 //	@Id
 	@JoinColumn(name = "`idMesero`")
 	private Empleado idMesero;

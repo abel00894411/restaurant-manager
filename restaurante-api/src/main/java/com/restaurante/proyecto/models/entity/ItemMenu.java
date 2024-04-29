@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,13 +24,15 @@ public class ItemMenu {
 	@Column(name = "idItemMenu")
 	private Long idItemMenu;
 	
-	@ManyToOne
+	private String producto;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="idCategoria")
 	private Categoria categoria;
 	
 	
 	@Column(name="precio")
-	private BigDecimal precio;
+	private BigDecimal precio=new BigDecimal(0);
 	
 	@Column(name="descripcion")
 	private String descripcion;
@@ -64,6 +67,14 @@ public class ItemMenu {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public String getProducto() {
+		return producto;
+	}
+
+	public void setProducto(String producto) {
+		this.producto = producto;
 	}
 	
 	
