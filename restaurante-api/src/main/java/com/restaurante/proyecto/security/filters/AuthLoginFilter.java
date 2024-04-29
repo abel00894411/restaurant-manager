@@ -52,7 +52,7 @@ public class AuthLoginFilter extends UsernamePasswordAuthenticationFilter{
 		JsonNode cuerpo = obtenerCuerpo(request);
 		String username = obtenerUsuario(cuerpo);
 		String password= obtenerPassword(cuerpo);
-		System.out.println(password);
+		System.out.println(username+"_"+password);
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
 		
 

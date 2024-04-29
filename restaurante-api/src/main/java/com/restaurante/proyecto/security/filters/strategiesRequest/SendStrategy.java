@@ -9,6 +9,7 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
+import com.restaurante.proyecto.models.entity.User;
 import com.restaurante.proyecto.services.JwtService;
 import com.restaurante.proyecto.utils.RoutesApp;
 
@@ -19,7 +20,7 @@ public class SendStrategy implements IStrategy{
 	private JwtService jwtService;
 
 	@Override
-	public boolean doSomething(Map<String, String> empleados, Message<?> message) {
+	public boolean doSomething(List<User> empleados, Message<?> message) {
 		String request = obtainRequest(message);
 		System.out.println("\t\t\tSend strategy");
 		if(!this.resquetHandler(request, "SEND")) {
@@ -29,8 +30,9 @@ public class SendStrategy implements IStrategy{
 		String token = this.obtainToken(message);
 		String id = jwtService.extractIdUsuario(token); //arroja excepcion si no es valido el token
 		String role = jwtService.extractRole( token );
+		String session = message.getHeaders().get("simpSessionId").toString();
 
-		if(! empleados.containsKey(id) ) {
+		if(! empleados.contains(new User(token, session, id, 0)) ) {
 			System.out.println("entro al if de send strategy");
 			throw new RuntimeException("Remitente desconocido");
 		}

@@ -1,9 +1,13 @@
 package com.restaurante.proyecto.models.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,23 +25,19 @@ public class Orden {
 	@Column(name = "idOrden")
 	private Long idOrden;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="idMesero")
 	private Mesero mesero;
 	
-	
-	
 	@JoinColumn(name="fecha")
-	private LocalDateTime fecha;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime fecha = LocalDateTime.now();
+	private BigDecimal subtotal;
+	private BigDecimal iva;
+	private BigDecimal total;
+	private String estado="ACTIVA";
 
 	
-	@PrePersist
-	void asignarFecha(){
-		
-		if(this.fecha == null) {
-			this.fecha = LocalDateTime.now();
-		}
-	}
 	
 	public Long getIdOrden() {
 		return idOrden;
@@ -61,6 +61,38 @@ public class Orden {
 
 	public void setFecha(LocalDateTime fecha) {
 		this.fecha = fecha;
+	}
+
+	public BigDecimal getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(BigDecimal subtotal) {
+		this.subtotal = subtotal;
+	}
+
+	public BigDecimal getIva() {
+		return iva;
+	}
+
+	public void setIva(BigDecimal iva) {
+		this.iva = iva;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 	
 	

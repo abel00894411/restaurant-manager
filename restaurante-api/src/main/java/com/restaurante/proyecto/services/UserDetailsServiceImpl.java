@@ -47,8 +47,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		Optional<Administrador> administrador = null;
 		Optional<Cocinero> cocinero= null;
 		Optional<Mesero> mesero= null;
-		User user ;
-		List<GrantedAuthority> authorities = null;
+		
 		
 		administrador = administradorRepository.findById(empleado.getIdEmpleado());
 		if(administrador.isPresent()) {
@@ -58,9 +57,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		if(mesero.isPresent()) {
 			return new User(username, empleado.getPassword(), true, true, true, true, createGrantedAuthorities("MESERO"));
 		}
-		
-		if(mesero.isPresent()) {
-			return new User(username, empleado.getPassword(), true, true, true, true, createGrantedAuthorities("MESERO"));
+		cocinero = cocineroRepository.findById(empleado.getIdEmpleado());
+		if(cocinero.isPresent()) {
+			return new User(username, empleado.getPassword(), true, true, true, true, createGrantedAuthorities("COCINERO"));
 		}
 		
 		return null;
@@ -77,8 +76,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		Optional<Administrador> administrador = null;
 		Optional<Cocinero> cocinero= null;
 		Optional<Mesero> mesero= null;
-		User user ;
-		List<GrantedAuthority> authorities = null;
+		
 		
 		administrador = administradorRepository.findById(empleado.getIdEmpleado());
 		if(administrador.isPresent()) {
@@ -88,9 +86,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		if(mesero.isPresent()) {
 			return new User(empleado.getRfc(), empleado.getPassword(), true, true, true, true, createGrantedAuthorities("MESERO"));
 		}
-		
-		if(mesero.isPresent()) {
-			return new User(empleado.getRfc(), empleado.getPassword(), true, true, true, true, createGrantedAuthorities("MESERO"));
+		cocinero = cocineroRepository.findById(empleado.getIdEmpleado());
+		if(cocinero.isPresent()) {
+			return new User(empleado.getRfc(), empleado.getPassword(), true, true, true, true, createGrantedAuthorities("COCINERO"));
 		}
 		
 		return null;

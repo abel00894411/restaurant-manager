@@ -2,8 +2,10 @@ package com.restaurante.proyecto.services;
 
 import java.security.Key;
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.messaging.Message;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
@@ -80,6 +82,21 @@ public class JwtService {
 		}catch (Exception e) {
 			return false;
 		}
+	}
+	
+	
+	
+	public String obtainTokenFromNativeHeader(Message<?> message) {
+		Map<String, List<String>> nativeHeaders = (Map<String, List<String>>) message.getHeaders().get("nativeHeaders");
+		List<String> authorization = nativeHeaders.get("Authorization");
+		if( authorization == null) {
+			throw new RuntimeException("No contiene header authorization"); //o seria mejor lanzar excepcion ?
+		}
+		
+		if(authorization.size() < 0 ) {
+			throw new RuntimeException("Authorization vacio");
+		}
+		return authorization.get(0).replace("Bearer ","");
 	}
 
 }

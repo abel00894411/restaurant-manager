@@ -34,7 +34,7 @@ public class ItemOrden {
 	private Cocinero cocinero;
 	
 	@Column(name = "estado",length = 20)
-	private String estado;
+	private String estado = "PENDIENTE";
 	
 	@Column(name="cantidad")
 	private Integer cantidad;
