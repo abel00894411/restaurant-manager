@@ -1,6 +1,6 @@
 CREATE DATABASE restaurante_analisis;
 
--- creación de tablas
+-- creación de tablaspruebaaa
 CREATE TABLE `restaurante_analisis`.`empleados` (
   `idEmpleado` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(50) NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE `restaurante_analisis`.`ordenes` (
   `subtotal` DECIMAL(10,2) NOT NULL,
   `iva` DECIMAL(10,2) NOT NULL,
   `total` DECIMAL(10,2) NOT NULL,
-  `estado` VARCHAR(8) NOT NULL,
+  `estado` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`idOrden`),
   CONSTRAINT `fk_orden_mesero`
     FOREIGN KEY (`idMesero`)
@@ -136,6 +136,44 @@ CREATE TABLE `restaurante_analisis`.`facturas` (
     REFERENCES `restaurante_analisis`.`ordenes` (`idOrden`)
     ON DELETE CASCADE
     ON UPDATE CASCADE
-);     
+);   
+
+
+
+DELIMITER //
+CREATE PROCEDURE recalcularSUBTOTAL_IVA_TOTAL(idOrden_procedure INT)
+BEGIN
+    
+    DECLARE nuevo_subtotal DECIMAL(10,2);
+    DECLARE nuevo_total DECIMAL(10,2);
+    
+    -- Calcula el nuevo subtotal
+    SELECT SUM(suma) INTO nuevo_subtotal
+    FROM itemsOrden 
+    WHERE idOrden = idOrden_procedure;
+    
+    -- Actualiza el subtotal, el IVA y el total de la orden
+    UPDATE ordenes 
+    SET subtotal = nuevo_subtotal,
+        iva = nuevo_subtotal * 0.16,
+        total = nuevo_subtotal + (nuevo_subtotal * 0.16)
+    WHERE idOrden = idOrden_procedure;
+    
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER actualizar_itemsOrden_insert 
+AFTER INSERT ON itemsOrden
+FOR EACH ROW
+BEGIN
+	CALL recalcularSUBTOTAL_IVA_TOTAL(NEW.idOrden);
+END;
+//
+DELIMITER ;
+
+
+
+
 
 
