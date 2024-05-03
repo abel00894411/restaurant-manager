@@ -1,0 +1,20 @@
+.count {
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    min-width: 200px;
+    width: fit-content;
+    height: fit-content;
+    font-size: 24px;
+    text-align: center;
+}
+
+.count__title {
+    background-color: var(--light-gray);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    padding: 8px;
+}
+
+.count__content {
+    padding: 8px;
+}
