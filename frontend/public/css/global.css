@@ -1,3 +1,5 @@
+@import url('../../node_modules/normalize.css/normalize.css');
+
 *, *::after, *::before {
     margin: 0;
     padding: 0;
@@ -15,6 +17,12 @@
     --tertiary: #d2db99;
     --error: #c0392b;
     --std-font-size: 20px;
+    --h1-font-size: calc(var(--std-font-size) * 2);
+    --h2-font-size: calc(var(--h1-font-size) - 4px);
+    --h3-font-size: calc(var(--h2-font-size) - 4px);
+    --h4-font-size: calc(var(--h3-font-size) - 4px);
+    --h5-font-size: calc(var(--h4-font-size) - 4px);
+    --h6-font-size: calc(var(--h5-font-size) - 4px);
 }
 
 html, body, #root {
@@ -23,35 +31,39 @@ html, body, #root {
 }
 
 html {
-    font-family: 'Yantramanav';
+    font-family: 'Yantramanav', sans-serif;
     color: var(--black);
     background-color: white;
 }
 
 h1 {
-    font-size: 40px;
+    font-size: var(--h1-font-size);
+    font-weight: bold;
 }
 
 h2 {
-    font-size: 36px;
+    font-size: var(--h2-font-size);
+    font-weight: bold;
 }
 
 h3 {
-    font-size: 32px;
+    font-size: var(--h3-font-size);
     font-weight: normal;
 }
 
 h4 {
-    font-size: 28px;
+    font-size: var(--h4-font-size);
     font-weight: normal;
 }
 
 h5 {
-    font-size: 24px;
+    font-size: var(--h5-font-size);
+    font-weight: bold;
 }
 
 h6 {
-    font-size: 20px;
+    font-size: var(--h6-font-size);
+    font-weight: bold;
 }
 
 p {
@@ -78,4 +90,18 @@ a:hover {
 
 .rounded-border {
     border-radius: 8px;
+}
+
+/* Medium screen size */
+@media screen and (max-width: 900px) {
+    :root {
+        --std-font-size: 18px;
+    }
+}
+
+/* Small screen size */
+@media screen and (max-width: 450px) {
+    :root {
+        --std-font-size: 16px;
+    }
 }
