@@ -1,0 +1,23 @@
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.employees, .orders {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+}
+
+.employees h3, .orders h3 {
+    text-align: center;
+}
+
+.employees__counts, .orders__counts {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 64px;
+}

@@ -12,9 +12,11 @@
 }
 
 main {
+    padding: 32px;
     width: 100%;
     height: 100%;
     background-color: transparent;
+    overflow-x: auto;
 }
 
 
@@ -22,5 +24,9 @@ main {
     .employee-layout {
         grid-template-columns: 100%;
         grid-template-rows: 64px 1fr;
+    }
+
+    main {
+        padding: 24px;
     }
 }
