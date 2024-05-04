@@ -4,7 +4,7 @@
     min-width: 200px;
     width: fit-content;
     height: fit-content;
-    font-size: 24px;
+    font-size: var(--h5-font-size);
     text-align: center;
 }
 
@@ -17,4 +17,11 @@
 
 .count__content {
     padding: 8px;
+}
+
+/* Small screen size */
+@media screen and (max-width: 450px) {
+    .count {
+        min-width: 184px;
+    }
 }

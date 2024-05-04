@@ -8,5 +8,5 @@
 }
 
 .date-time__date {
-    font-size: 32px;
+    font-size: var(--h3-font-size);
 }
