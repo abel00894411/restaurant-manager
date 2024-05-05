@@ -66,13 +66,18 @@ const adminPaths = [
 const customerPaths = [
     {
         path: '/',
-        element: <h1>Public index</h1>,
-        display: 'Panel'
+        element: <Customer.LoginPage />,
+        display: 'Login'
     },
     {
         path: '/menu',
         element: <Customer.MenuPage />,
-        display: 'Panel'
+        display: 'Menu'
+    },
+    {
+        path: '/factura',
+        element: <Customer.InvoicePage />,
+        display: 'Invoice'
     }
 ];
 
