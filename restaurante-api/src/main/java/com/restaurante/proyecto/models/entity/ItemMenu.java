@@ -36,6 +36,8 @@ public class ItemMenu {
 	
 	@Column(name="descripcion")
 	private String descripcion;
+	
+	private String imagen;
 
 	public Long getIdItemMenu() {
 		return idItemMenu;
@@ -75,6 +77,14 @@ public class ItemMenu {
 
 	public void setProducto(String producto) {
 		this.producto = producto;
+	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 	
 	

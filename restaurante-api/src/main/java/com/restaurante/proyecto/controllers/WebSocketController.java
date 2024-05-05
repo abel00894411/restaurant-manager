@@ -133,7 +133,7 @@ public class WebSocketController {
 		sendToRoute(RoutesTopic.topicItemsListados.getPath()+"/"+id, response);
 	}
 	
-	
+	 
 	@MessageMapping("/items/actualizar")
 	public void actualizarItem(ItemOrdenActualizarRequest itemOrdenActualizarRequest,Message<?> message) {
 		String id = jwtService.extractIdUsuario( jwtService.obtainTokenFromNativeHeader(message) );

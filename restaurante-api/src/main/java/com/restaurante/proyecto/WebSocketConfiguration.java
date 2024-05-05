@@ -45,7 +45,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer{
 		
 //		registration.interceptors(new AuthSocketInterceptor());
 		registration.interceptors(authSocketInterceptor);
-		//		WebSocketMessageBrokerConfigurer.super.configureClientInboundChannel(registration);
+//		WebSocketMessageBrokerConfigurer.super.configureClientInboundChannel(registration);
 	}
 	
 	

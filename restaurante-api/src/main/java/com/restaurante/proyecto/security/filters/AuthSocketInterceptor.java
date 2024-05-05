@@ -47,23 +47,12 @@ public class AuthSocketInterceptor implements ChannelInterceptor{
 		System.out.println("solicitud de tipo: "+solicitud);
 		System.out.println(message.getHeaders());
 		
-		
-		if(session!= null) {
-			//tener cuidado con que tipo de solicitud es
-			
-//			if
-			
-			///quitar estas dos
-			Map<String, List<String>> nativeHeaders = (Map<String, List<String>>) message.getHeaders().get("nativeHeaders");
-//			List<String> authorization = nativeHeaders.get("Authorization");
-			///
-			
-			if( !manejar(message) ) {
-				System.out.println("no se pudo manejar la solicitud");
-				throw new RuntimeException("No se pudo manejar el request -- AuthSocketInterceptor... if !manejar");
-			}
-			
+
+		if( !manejar(message) ) {
+			System.out.println("no se pudo manejar la solicitud");
+			throw new RuntimeException("No se pudo manejar el request -- AuthSocketInterceptor... if !manejar");
 		}
+
 
 		int i = 0;
 		for(User emp : empleadosActivos) {
@@ -74,15 +63,6 @@ public class AuthSocketInterceptor implements ChannelInterceptor{
 		return ChannelInterceptor.super.preSend(message, channel);
 	}
 	
-	
-//	private String obtenerId(List<String> authorizationList) {
-//		
-//		String bearerToken = authorizationList.size() >=0? authorizationList.get(0) : "";
-//		String token = bearerToken.replace(BEARER_PREFIX, "");
-//		System.out.println("\n\n"+token+"\n\n");
-//		return jwtService.extractIdUsuario(token);
-//	}
-//	
 	private boolean manejar(Message<?> message) {
 		
 		boolean band =false;

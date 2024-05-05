@@ -1,6 +1,7 @@
 package com.restaurante.proyecto.security.filters;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +50,7 @@ public class AuthorizationFilter extends OncePerRequestFilter{
 		String requestUri = request.getRequestURI();
 		
 		System.out.println(requestUri);
+
 		if( ! (   requestUri.startsWith("/connect") ||  requestUri.startsWith("/topic")   ) ) {
 			
 		
