@@ -77,6 +77,7 @@ CREATE TABLE  `restaurante_analisis`.`itemsMenu` (
   `idCategoria` INT NOT NULL,
   `precio` DECIMAL(10,2) NOT NULL,
   `descripcion` VARCHAR(300) NOT NULL,
+  `imagen` VARCHAR(200),
   PRIMARY KEY (`idItemMenu`),
   CONSTRAINT `fk_itemsMenu_categoria`
   FOREIGN KEY (`idCategoria`)
