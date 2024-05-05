@@ -27,7 +27,7 @@ public class ConnectStrategy implements IStrategy{
 	public boolean doSomething(List<User> empleados, Message<?> message) {
 		String request = obtainRequest(message);
 		
-		System.out.println("\t\t\tConnect strategy");
+		System.out.println("\t\t\tConnect strategy");		
 		if(!this.resquetHandler(request, "CONNECT")) {
 			return false;
 		}
@@ -73,8 +73,5 @@ public class ConnectStrategy implements IStrategy{
 		return true;
 	}
 
-	
-//	private boolean isUserActive(String id, Map<String, String> empleados) {
-//		return empleados.containsKey(id);
-//	}
+
 }
