@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import devLog from '../util/devLog';
 import './Clock.css';
 
 const Clock = ({ onUpdate }) => {
@@ -21,7 +22,7 @@ const Clock = ({ onUpdate }) => {
     const [ time, setTime ] = useState(getTime());
     
     useEffect(() => {
-        console.log('Clock started');
+        devLog('Clock started');
         
         const interval = setInterval(() => {
             setTime(getTime());
@@ -33,8 +34,8 @@ const Clock = ({ onUpdate }) => {
         }, 1000);
 
         return () => {
-            clearInterval(interval)
-            console.log('Clock stoped');
+            clearInterval(interval);
+            devLog('Clock stoped');
         };
 
     }, []);
