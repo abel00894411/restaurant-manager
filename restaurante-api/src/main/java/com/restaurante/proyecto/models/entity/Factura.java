@@ -42,8 +42,8 @@ public class Factura {
 	@Column(name="total")
 	private BigDecimal total;
 	
-	
-	
+	@Column(name="rfc")
+	private String rfc;
 	
 	
 	
@@ -102,6 +102,14 @@ public class Factura {
 
 	public void setTotal(BigDecimal total) {
 		this.total = total;
+	}
+
+	public String getRfc() {
+		return rfc;
+	}
+
+	public void setRfc(String rfc) {
+		this.rfc = rfc;
 	}
 
 	
