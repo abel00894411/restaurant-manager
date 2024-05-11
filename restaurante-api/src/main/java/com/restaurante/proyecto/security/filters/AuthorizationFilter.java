@@ -69,7 +69,8 @@ public class AuthorizationFilter extends OncePerRequestFilter{
 				return;
 			}
 			
-			// me parece que estas ya arrojaan excepcion
+			
+			
 			String jwt = authHeader.split(" ")[1];
 			Long id = Long.parseLong(jwtService.extractIdUsuario(jwt));
 			UserDetails user = userDetailsService.loadUserById(id);
