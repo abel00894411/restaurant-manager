@@ -127,6 +127,7 @@ CREATE TABLE `restaurante_analisis`.`itemsOrden` (
 CREATE TABLE `restaurante_analisis`.`facturas` (
   `idFactura` INT NOT NULL AUTO_INCREMENT,
   `idOrden` INT NOT NULL,
+  `rfc` VARCHAR(13) NOT NULL,
   `fechaEmision` DATETIME NOT NULL,
   `correo` VARCHAR(100) NOT NULL,
   `direccion` VARCHAR(200) NOT NULL,
