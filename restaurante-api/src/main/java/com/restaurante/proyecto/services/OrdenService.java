@@ -1,21 +1,31 @@
 package com.restaurante.proyecto.services;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.restaurante.proyecto.dtos.ItemMenuResponse;
 import com.restaurante.proyecto.dtos.ItemOrdenActualizarRequest;
 import com.restaurante.proyecto.dtos.ItemOrdenAgregadoResponse;
 import com.restaurante.proyecto.dtos.ItemOrdenListado;
+import com.restaurante.proyecto.dtos.ItemOrdenListar;
 import com.restaurante.proyecto.dtos.ItemOrdenRequest;
+import com.restaurante.proyecto.dtos.ItemOrdenResponse;
 import com.restaurante.proyecto.dtos.OrdenAsignadoResponse;
 import com.restaurante.proyecto.dtos.OrdenListadoResponse;
+import com.restaurante.proyecto.dtos.OrdenListarResponse;
 import com.restaurante.proyecto.dtos.OrdenLlenarRequest;
 import com.restaurante.proyecto.dtos.OrdenRequest;
 import com.restaurante.proyecto.models.entity.Categoria;
@@ -44,13 +54,7 @@ public class OrdenService {
 	@Autowired
 	private IOrdenRepository ordenRepository;
 	@Autowired
-	private IItemMenuRepository itemMenuRepository;
-	@Autowired
-	private ICocineroRepository cocineroRepository;
-	@Autowired
 	private IItemOrdenRepository itemOrdenRepository;
-	@Autowired
-	private IEmpleadoRepository empleadoRepository;
 	@Autowired
 	private ItemOrdenService itemOrdenService;
 	
@@ -140,11 +144,54 @@ public class OrdenService {
 	}
 	
 	
+	// OrdenController (rest)
+	
+	
+	public List<OrdenListarResponse> listarOrdenesPorFecha(LocalDate dateMin, LocalDate dateMax) {
+		List<Orden> ordenes = ordenRepository.findByfechaBetween(dateMin.atStartOfDay(), dateMax.atTime( LocalTime.of(23, 59, 0)));
+		List<OrdenListarResponse> resultados = crearOrdenesEnlistarResponse(ordenes);		
+		return resultados;
+		
+	}
+	
+	
+
+
+	public List<OrdenListarResponse> obtenerPorId(Long id) {
+		
+		Orden orden = ordenRepository.findById(id).orElseThrow(()->new RuntimeException("No existe esa orden"));
+		List<OrdenListarResponse> resultados = crearOrdenesEnlistarResponse(Arrays.asList(orden));		
+		return resultados;
+	}
+	
+	
+	
+	public void eliminarPorId(Long id) {
+		ordenRepository.deleteById(id);
+	}
 	
 	
 	
 	
-	////////
+	private List<OrdenListarResponse> crearOrdenesEnlistarResponse(List<Orden> ordenes){
+		List<OrdenListarResponse> resultados = new ArrayList<OrdenListarResponse>();
+		for(Orden orden:ordenes) {	
+			List<ItemOrden> itemsOrden = itemOrdenRepository.buscarPorIdOrden(orden.getIdOrden());
+			List<ItemOrdenListar> items = itemsOrden.stream().map(i->{
+				
+				ItemOrdenListar item = ItemOrdenListar.obtenerItem(i);
+				
+				return item;
+			}).collect(Collectors.toList());
+			
+			OrdenListarResponse ordenListarResponse = OrdenListarResponse.obtenerOrden(orden, items);
+			resultados.add(ordenListarResponse);
+		}
+		return resultados;
+	}
+	
+	
+	//////// helpers
 	
 	public void asignarOrdenAItems( List<ItemOrden> itemsOrden, Orden orden) {
 		for (ItemOrden itemOrden : itemsOrden) {
@@ -183,5 +230,7 @@ public class OrdenService {
 		}		
 		return subtotal;
 	}
+
+
 	
 }
