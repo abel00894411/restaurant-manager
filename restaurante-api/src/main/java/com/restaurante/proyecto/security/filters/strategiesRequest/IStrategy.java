@@ -72,7 +72,7 @@ public interface IStrategy {
 			if (r.getPath().equals(route)) {
 				List<String> permitidos = r.getRoles();
 				System.out.println(route + "  ===  " + permitidos);
-				return permitidos.contains(role);
+				return permitidos.contains(role) && permitIdSuscribe(id, route);
 			}
 		}
 		return false;
@@ -91,6 +91,17 @@ public interface IStrategy {
 			}
 		}
 		return route;
+	}
+	
+	
+	private boolean permitIdSuscribe(String id, String route) {
+
+		String[] dividido = route.split("/");
+		String idSuscription =dividido[dividido.length - 1];
+		if (idSuscription.matches("^[1-9]\\d*$")) {
+			return idSuscription.equals(id);
+		}
+		return true;
 	}
 
 }

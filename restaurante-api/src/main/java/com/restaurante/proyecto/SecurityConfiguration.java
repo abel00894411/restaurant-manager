@@ -64,6 +64,8 @@ public class SecurityConfiguration {
 						.requestMatchers("/menu/**").hasRole("ADMINISTRADOR")
 						.requestMatchers("/ordenes/**").hasRole("ADMINISTRADOR")
 						.requestMatchers("/orden/**").hasRole("ADMINISTRADOR")
+						.requestMatchers("/facturas").permitAll()
+						.requestMatchers(HttpMethod.DELETE,"/factura/**").hasRole("ADMINISTRADOR")
 						.anyRequest().authenticated()
 //						.anyRequest().permitAll()
 					
