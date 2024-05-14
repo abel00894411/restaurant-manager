@@ -1,5 +1,17 @@
 CREATE DATABASE restaurante_analisis;
 
+CREATE TABLE `restaurante_analisis`.`empleados` (
+  `idEmpleado` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) NOT NULL,
+  `apellido` VARCHAR(50) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
+  `rfc` VARCHAR(13) NOT NULL UNIQUE,
+  `sueldo` DECIMAL(10,2) NOT NULL,
+  `fechaContratacion` DATE NOT NULL,
+  PRIMARY KEY (`idEmpleado`)
+);
+
+
 CREATE TABLE `restaurante_analisis`.`administradores` (
   `idAdministrador` INT NOT NULL,
   PRIMARY KEY (`idAdministrador`),
@@ -115,6 +127,7 @@ CREATE TABLE `restaurante_analisis`.`itemsOrden` (
 CREATE TABLE `restaurante_analisis`.`facturas` (
   `idFactura` INT NOT NULL AUTO_INCREMENT,
   `idOrden` INT NOT NULL,
+  `rfc` VARCHAR(13) NOT NULL,
   `fechaEmision` DATETIME NOT NULL,
   `correo` VARCHAR(100) NOT NULL,
   `direccion` VARCHAR(200) NOT NULL,

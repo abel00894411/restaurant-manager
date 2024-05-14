@@ -3,6 +3,7 @@ package com.restaurante.proyecto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -54,6 +55,15 @@ public class SecurityConfiguration {
 						.requestMatchers("/topic/**").permitAll()
 						.requestMatchers("/connect/**").permitAll()
 						.requestMatchers("/prueba-empleados-activos").permitAll()
+						.requestMatchers("/usuarios/**").hasAuthority("ADMINISTRADOR")
+						.requestMatchers(HttpMethod.GET, "/usuario/{id:\\d+}").hasAnyRole("ADMINISTRADOR","MESERO","COCINERO")
+						.requestMatchers(HttpMethod.PUT, "/usuario/{id:\\d+}").hasRole("ADMINISTRADOR")
+						.requestMatchers(HttpMethod.PATCH, "/usuario/{id:\\d+}").hasAnyRole("ADMINISTRADOR","MESERO","COCINERO")
+						.requestMatchers(HttpMethod.DELETE, "/usuario/{id:\\d+}").hasRole("ADMINISTRADOR")
+						.requestMatchers(HttpMethod.GET,"/menu").permitAll()
+						.requestMatchers("/menu/**").hasRole("ADMINISTRADOR")
+						.requestMatchers("/ordenes/**").hasRole("ADMINISTRADOR")
+						.requestMatchers("/orden/**").hasRole("ADMINISTRADOR")
 						.anyRequest().authenticated()
 //						.anyRequest().permitAll()
 					
