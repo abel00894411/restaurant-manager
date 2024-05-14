@@ -82,16 +82,18 @@ const customerPaths = [
 ];
 
 let token = getTokenData();
+const userType = token?.tipo;
 
 // Choose the correct path list for the type of user logged-in
 let paths = (
-    token?.tipo == 'MESERO' ? waiterPaths
-    : token?.tipo == 'COCINERO' ? cookPaths
-    : token?.tipo == 'ADMINISTRADOR' ? adminPaths
+    userType == 'MESERO' ? waiterPaths
+    : userType == 'COCINERO' ? cookPaths
+    : userType == 'ADMINISTRADOR' ? adminPaths
     : undefined
 );
 
 if (!paths) {
+    console.log(token.tipo);
     logout({ redirect: false });
     token = getTokenData();
     paths = customerPaths
