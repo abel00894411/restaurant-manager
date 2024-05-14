@@ -88,7 +88,7 @@ CREATE TABLE  `restaurante_analisis`.`itemsMenu` (
   `producto` VARCHAR(100) NOT NULL,
   `idCategoria` INT NOT NULL,
   `precio` DECIMAL(10,2) NOT NULL,
-  `descripcion` VARCHAR(300) NOT NULL,
+  `descripcion` VARCHAR(300),
   `imagen` VARCHAR(200),
   PRIMARY KEY (`idItemMenu`),
   CONSTRAINT `fk_itemsMenu_categoria`
