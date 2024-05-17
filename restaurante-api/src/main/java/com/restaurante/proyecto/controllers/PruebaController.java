@@ -22,6 +22,7 @@ import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuer
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +43,8 @@ import com.restaurante.proyecto.repositories.IOrdenRepository;
 import com.restaurante.proyecto.security.filters.AuthSocketInterceptor;
 
 @RestController
+@CrossOrigin(originPatterns = "*", allowedHeaders = "*")
+
 public class PruebaController {
 
 	@Autowired
