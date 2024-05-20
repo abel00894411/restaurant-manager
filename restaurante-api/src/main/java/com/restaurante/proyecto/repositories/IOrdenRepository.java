@@ -20,6 +20,6 @@ public interface IOrdenRepository extends JpaRepository<Orden, Long>{
 	
 	List<Orden> findByfechaBetween(LocalDateTime dateMin, LocalDateTime dateMax);
 	
-	
+	Orden findByEstadoAndIdOrden(String estado, Long idOrden);
 
 }
