@@ -9,6 +9,7 @@ class Menu {
     #categories: object[] = [];
     #items: MenuItem[] = [];
     #constructed = false;
+    onReady: Function;
 
     constructor() {
         fetchAPI('categorias', 'GET')
@@ -35,6 +36,7 @@ class Menu {
                     });
     
                     this.#constructed = true;
+                    this.onReady?.();
 
                 } catch(error) {
                     devLog(`Unable to instanciate Menu object: ${error.message}`);

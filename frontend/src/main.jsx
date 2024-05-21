@@ -8,6 +8,7 @@ import * as Admin from './routes/admin/index.jsx';
 import * as Customer from './routes/customer/index.jsx';
 import logout from './util/logout.js';
 import getTokenData from './util/getTokenData.js';
+import { menu } from './models/Menu';
 
 const waiterPaths = [
     {
@@ -108,8 +109,11 @@ const router = createBrowserRouter([
     }
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-        <RouterProvider router={router} />
-    </React.StrictMode>,
-)
+// Initiate menu before starting app
+menu.onReady = () => {
+    ReactDOM.createRoot(document.getElementById('root')).render(
+        <React.StrictMode>
+            <RouterProvider router={router} />
+        </React.StrictMode>,
+    );
+}
