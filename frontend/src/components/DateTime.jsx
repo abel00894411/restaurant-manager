@@ -10,7 +10,7 @@ const DateTime = () => {
         const day = now.getDate();
         const month = now.getMonth();
         const year = now.getFullYear();
-        const monthName = monthNames[month-1];
+        const monthName = monthNames[month];
         return `${day} de ${monthName} de ${year}`;
     };
 
