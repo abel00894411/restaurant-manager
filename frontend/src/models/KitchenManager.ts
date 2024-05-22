@@ -8,6 +8,7 @@ import assignedOrderItemEvent from "../events/assignedOrderItemEvent";
 import IAssignedOrderItemEvent from "../interfaces/IAssignedOrderItemEvent";
 import listedOrderItemsEvent from "../events/listedOrderItemsEvent";
 import IListedOrderItemsEvent from "../interfaces/IListedOrderItemsEvent";
+import updatedOrderItemEvent from "../events/updatedOrderItemEvent";
 
 const tokenData = getTokenData();
 const userId = tokenData.idUsuario;
@@ -20,6 +21,10 @@ const topics: ITopic[] = [
     { 
         path: `/topic/items/asignados/${userId}`,
         event: assignedOrderItemEvent
+    },
+    {
+        path: `/topic/items/actualizaciones/${userId}`,
+        event: updatedOrderItemEvent
     }
 ];
 
