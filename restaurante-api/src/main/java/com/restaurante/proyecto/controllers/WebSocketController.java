@@ -1,5 +1,6 @@
 package com.restaurante.proyecto.controllers;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -163,6 +164,7 @@ public class WebSocketController {
 			itemResponse.put("idItemMenu", item.getItemMenu().getIdItemMenu());
 			itemResponse.put("cantidad", item.getCantidad());
 			itemResponse.put("estado", item.getEstado());
+			itemResponse.put("fecha", item.getOrden().getFecha().format( DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") )  );
 			
 			itemsResponse.put("items", itemResponse);
 
