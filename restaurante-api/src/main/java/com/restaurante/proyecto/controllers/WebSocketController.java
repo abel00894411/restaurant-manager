@@ -148,7 +148,7 @@ public class WebSocketController {
 			HashMap<String, Object> u = new HashMap<String, Object>();
 			
 			u.put("idItemOrden", x.idItemOrden());
-			u.put("idItemMemu", x.idItemMenu());
+			u.put("idItemMenu", x.idItemMenu());
 			u.put("cantidad", x.cantidad());
 			u.put("estado", x.estado());
 			u.put("fecha", orden.getFecha().format(  DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") )    );
