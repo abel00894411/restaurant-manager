@@ -95,7 +95,15 @@ abstract class JobManager {
      * list.
      */
     getAll(): Order[] | OrderItem[] {
-        return this.list.map(item => Object.assign({}, item));
+        return this.list.map(item => {
+            if (item instanceof Order) {
+                return new Order(item.id, item.date, item.state);
+            } else if (item instanceof OrderItem) {
+                return new OrderItem(item.id, item.orderId, item.menuItemId, item.state, item.quantity, item.creationDateTime);
+            } else {
+                return Object.assign({}, item);
+            }
+        });
     }
 
     /**
