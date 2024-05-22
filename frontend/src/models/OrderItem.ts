@@ -12,6 +12,7 @@ class OrderItem {
     menuItemId?: number;
     state?: string;
     quantity?: number;
+    creationDateTime?: Date;
 
     /**
      * @param id The id of the order item this object represents, if undefined, this object represents a new order item
@@ -25,13 +26,15 @@ class OrderItem {
         orderId: number | undefined = undefined, 
         menuItemId: number | undefined = undefined, 
         state: string | undefined = undefined, 
-        quantity: number | undefined = undefined
+        quantity: number | undefined = undefined,
+        creationDateTime: Date | undefined = undefined
     ) {
         this.id = id;
         this.orderId = orderId;
         this.menuItemId = menuItemId;
         this.state = state;
         this.quantity = quantity;
+        this.creationDateTime = creationDateTime;
     }
 
     getCost(): number {

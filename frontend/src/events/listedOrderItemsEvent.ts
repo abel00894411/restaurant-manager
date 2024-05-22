@@ -4,13 +4,13 @@ import IListedOrderItemsEvent from '../interfaces/IListedOrderItemsEvent';
 import { Message } from 'stompjs';
 
 /**
- * Fires an event for new messages from topic/items/listados/{id}. For cook users.
+ * Creates an event for new messages from topic/items/listados/{id}. For cook users.
  */
 const listedOrderItemsEvent: IEventFunction = (message: Message) => {
     const body = JSON.parse(message.body);
     const list: [] = body.items;
 
-    const items = list.map((item: any) => new OrderItem(item.idItemOrden, undefined, item.idItemMenu, item.estado, item.cantidad ));
+    const items = list.map((item: any) => new OrderItem(item.idItemOrden, undefined, item.idItemMenu, item.estado, item.cantidad, new Date(item.fecha) ));
     Object.freeze(items);
 
     const detail = {
@@ -18,7 +18,6 @@ const listedOrderItemsEvent: IEventFunction = (message: Message) => {
     };
 
     const event: IListedOrderItemsEvent = new CustomEvent('listedOrderItems', { detail });
-    document.dispatchEvent(event);
     return event;
 }
 

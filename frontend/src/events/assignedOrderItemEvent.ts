@@ -4,13 +4,14 @@ import IAssignedOrderItemEvent from "../interfaces/IAssignedOrderItemEvent";
 import { Message } from 'stompjs';
 
 /**
- * Fires an event for new messages from topic/items/asignados/{id}. For cook users.
+ * Creates an CustomEvent for new messages from topic/items/asignados/{id}. For cook users.
  */
 const assignedOrderItemEvent: IEventFunction = (message: Message) => {
     const body = JSON.parse(message.body);
-    const { idItemMenu, idItemOrden, cantidad, estado } = body?.items;
+    const { idItemMenu, idItemOrden, cantidad, estado, fecha } = body?.items;
+    const creationDateTime = new Date(fecha);
 
-    const item = new OrderItem(idItemOrden, undefined, idItemMenu, estado, cantidad);
+    const item = new OrderItem(idItemOrden, undefined, idItemMenu, estado, cantidad, creationDateTime);
     Object.freeze(item);
 
     const detail = {
@@ -18,7 +19,6 @@ const assignedOrderItemEvent: IEventFunction = (message: Message) => {
     };
 
     const event: IAssignedOrderItemEvent = new CustomEvent('assignedOrderItem', { detail });
-    document.dispatchEvent(event);
     return event;
 }
 

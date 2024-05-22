@@ -63,7 +63,7 @@ class Order {
      * Returns an array containing copys of the order's items.
      */
     getItems(): OrderItem[] {
-        const res = this.#items.map(item => new OrderItem(item.id, item.orderId, item.menuItemId, item.state, item.quantity));
+        const res = this.#items.map(item => new OrderItem(item.id, item.orderId, item.menuItemId, item.state, item.quantity, item.creationDateTime));
         return res;
     }
 
@@ -79,7 +79,7 @@ class Order {
             return undefined;
         }
 
-        const copy = new OrderItem(ref.id, ref.orderId, ref.menuItemId, ref.state, ref.quantity);
+        const copy = new OrderItem(ref.id, ref.orderId, ref.menuItemId, ref.state, ref.quantity, ref.creationDateTime);
         return copy;
     }
 
@@ -108,7 +108,7 @@ class Order {
         }
 
         if (!ref) {
-            const copy = new OrderItem(item.id, item.orderId, item.menuItemId, item.state, item.quantity);
+            const copy = new OrderItem(item.id, item.orderId, item.menuItemId, item.state, item.quantity, item.creationDateTime);
             this.#items.push(copy);
         } else {
 
