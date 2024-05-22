@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
@@ -28,7 +29,9 @@ import com.restaurante.proyecto.models.entity.ItemOrden;
 import com.restaurante.proyecto.models.entity.Mesero;
 import com.restaurante.proyecto.models.entity.Orden;
 import com.restaurante.proyecto.repositories.IEmpleadoRepository;
+import com.restaurante.proyecto.repositories.IItemOrdenRepository;
 import com.restaurante.proyecto.repositories.IMeseroRepository;
+import com.restaurante.proyecto.repositories.IOrdenRepository;
 import com.restaurante.proyecto.security.filters.AuthSocketInterceptor;
 import com.restaurante.proyecto.services.ItemOrdenService;
 import com.restaurante.proyecto.services.JwtService;
@@ -54,6 +57,11 @@ public class WebSocketController {
 	private ItemOrdenService itemOrdenService;
 	@Autowired
 	private IMeseroRepository meseroRepository;
+	@Autowired
+	private IOrdenRepository ordenRepository;
+	@Autowired
+	private IItemOrdenRepository itemOrdenRepository;
+
 
 
 	// ELIMINAR, es de prueba  ChannelInterceptor
@@ -127,10 +135,31 @@ public class WebSocketController {
 	@MessageMapping("/items/enlistar")
 	public void enlistarItems(Message<?> message) {
 		String id = jwtService.extractIdUsuario( jwtService.obtainTokenFromNativeHeader(message) );
-
+		
+		
+		
 		List<ItemOrdenListado> resultados = itemOrdenService.listadoDeItems( Long.valueOf(id) );
+		
+		List<Object> res = resultados.stream().map(x->{
+			
+			ItemOrden itemOrden = itemOrdenRepository.findById(x.idItemOrden()).get();
+			Orden orden = ordenRepository.findById(itemOrden.getOrden().getIdOrden()).get();
+			
+			HashMap<String, Object> u = new HashMap<String, Object>();
+			
+			u.put("idItemOrden", x.idItemOrden());
+			u.put("idItemMemu", x.idItemMenu());
+			u.put("cantidad", x.cantidad());
+			u.put("estado", x.estado());
+			u.put("fecha", orden.getFecha().format(  DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") )    );
+			return u;
+			
+		}).collect(Collectors.toList());
+		
+		
+		
 		Map<String, Object> response = new HashMap<String, Object>();
-		response.put("items", resultados);
+		response.put("items", res);
 		sendToRoute(RoutesTopic.topicItemsListados.getPath()+"/"+id, response);
 	}
 	
