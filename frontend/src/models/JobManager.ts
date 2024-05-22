@@ -55,9 +55,25 @@ abstract class JobManager {
 
                 // Subscribe to all topics
                 for (const topic of topics) {
+                    let callback: (message: Stomp.Message) => any;
+                    
+                    if (topic.event) {
+                        callback = (message: Stomp.Message) => {
+                            const customEvent = topic.event?.(message);
+                            
+                            if (customEvent) {
+                                document.dispatchEvent(customEvent);
+                            }
+                        }
+                    } else {
+                        callback = (message: Stomp.Message) => {
+                            console.log(`Message from ${topic.path}: ${message.body}`);
+                        }
+                    }
+                        
                     const sub = this.#client.subscribe(
                         topic.path,
-                        topic.event || ((message: Stomp.Message) => console.log(`Message from ${topic.path}: ${message.body}`)),
+                        callback,
                         { ...headers, id: Math.random() } // unique id for each subscription
                     );
 
