@@ -2,6 +2,8 @@ package com.restaurante.proyecto.models.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -31,13 +33,28 @@ public class Orden {
 	
 	@JoinColumn(name="fecha")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime fecha = LocalDateTime.now();
+	private LocalDateTime fecha;
 	private BigDecimal subtotal;
 	private BigDecimal iva;
 	private BigDecimal total;
 	private String estado="ACTIVA";
 
 	
+	
+	@PrePersist
+	private void crearFecha() {
+		if(fecha==null) {
+			ZoneId zoneId = ZoneId.of("America/Mexico_City");
+	        
+	        // Obtiene la fecha y hora actual en la zona horaria especificada
+	        ZonedDateTime zonedDateTime = ZonedDateTime.now(zoneId);
+	        
+	        // Convierte ZonedDateTime a LocalDateTime
+	        LocalDateTime l = zonedDateTime.toLocalDateTime();
+	        
+	        this.fecha = l;
+		}
+	}
 	
 	public Long getIdOrden() {
 		return idOrden;

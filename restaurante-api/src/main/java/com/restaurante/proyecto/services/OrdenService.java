@@ -110,6 +110,7 @@ public class OrdenService {
 		
 		Orden orden = ordenRepository.findById(ordenLlenarRequest.idOrden()).orElseThrow( ()->new RuntimeException("Orden inexistente"));
 		
+		
 		if(!orden.getEstado().equals("ACTIVA")) {
 			throw new RuntimeException("La orden ya esta despachada, no se pueden agregar maas items");
 		}
