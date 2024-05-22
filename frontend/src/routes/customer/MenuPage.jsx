@@ -1,8 +1,8 @@
 const MenuPage = () => {
     return (
-        <main>
+        <>
             Menu Page
-        </main>
+        </>
     );
 };
 

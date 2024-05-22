@@ -1,8 +1,8 @@
 const InvoicePage = () => {
     return (
-        <main>
+        <>
             Invoice Page
-        </main>
+        </>
     );
 };
 

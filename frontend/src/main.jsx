@@ -42,12 +42,22 @@ const cookPaths = [
     {
         path: '/',
         element: <Cook.Dashboard />,
-        display: 'Panel'
+        display: 'Cocina'
     },
     {
         path: '/panel',
         element: <Cook.Dashboard />,
-        display: 'Panel'
+        display: 'Cocina'
+    },
+    {
+        path: '/menu',
+        element: <Cook.MenuPage />,
+        display: 'Menú'
+    },
+    {
+        path: '/perfil',
+        element: <Cook.ProfilePage />,
+        display: 'Perfil'
     }
 ];
 
@@ -61,6 +71,21 @@ const adminPaths = [
         path: '/panel',
         element: <Admin.Dashboard />,
         display: 'Panel'
+    },
+    {
+        path: '/usuarios',
+        element: <Admin.UsersPage />,
+        display: 'Usuarios'
+    },
+    {
+        path: '/menu',
+        element: <Admin.MenuPage />,
+        display: 'Menú'
+    },
+    {
+        path: '/informes',
+        element: <Admin.ReportsPage />,
+        display: 'Informes'
     }
 ];
 
