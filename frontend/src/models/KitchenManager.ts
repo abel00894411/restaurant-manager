@@ -71,6 +71,8 @@ class KitchenManager extends JobManager {
             const { items } = detail;
             this.list = Array.from(items);
         });
+
+        // TODO: Add EventListener for updatedOrderItemEvent that updates the local items list
         
     }
     
