@@ -130,10 +130,12 @@ abstract class JobManager {
      * Method will receive an Order or OrderItem as argument. Based on the given
      * object's id or the lack of it, it will ask the server to either update an
      * existing object or create a new one.
-     * When creating a new object, all of its properties other than id must be
-     * defined.
      * Later, and not as part of this method, the server response will trigger
      * the corresponding changes in local data.
+     * For OrderItem: When creating a new order item, all of its properties 
+     * other than id and creationDateTime must be defined.
+     * For Order: When creating a new order, its list must include at least one
+     * OrderItem.
      * @param object The object
      * @returns true on success, false otherwise
      */
