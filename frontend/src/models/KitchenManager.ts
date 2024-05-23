@@ -99,13 +99,13 @@ class KitchenManager extends JobManager {
     }
 
     get(id: number) {
-        const ref = this.list.find(item => item.id == id);
+        const ref = this.list.find(item => item.id == id) as OrderItem;   
 
         if (!ref) {
             return undefined;
         }
 
-        const copy = Object.assign({}, ref);
+        const copy = new OrderItem(ref.id, ref.orderId, ref.menuItemId, ref.state, ref.quantity, ref.creationDateTime);
         return copy;
     }
 }
