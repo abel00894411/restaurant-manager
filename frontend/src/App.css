@@ -89,6 +89,24 @@ a:hover {
     text-decoration: underline;
 }
 
+table {
+    border: 1px solid var(--light-gray);
+    width: 100%;
+    overflow-x: auto;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    font-size: calc(var(--std-font-size) - 2px);
+    vertical-align: middle;
+}
+
+th {
+    background-color: var(--light-gray);
+    font-weight: bold;
+}
+
 .employee-layout {
     display: grid;
     grid-template-columns: 240px 1fr;

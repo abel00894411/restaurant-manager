@@ -1,0 +1,21 @@
+.tinyButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--tertiary);
+    border: none;
+    border-radius: 4px;
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.tinyButton:disabled {
+    background-color: var(--medium-gray);
+    color: var(--gray);
+}
+
+.tinyButtonLink {
+    display: contents;
+}
