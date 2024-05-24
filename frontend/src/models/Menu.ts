@@ -64,6 +64,37 @@ class Menu {
     }
 
     /**
+     * Returns an array containing all menu item data
+     */
+    getAllItems(): MenuItem[] {
+        if (!this.#constructed) {
+            throw new Error(`Cannot use Menu before construction finalization.`);
+        }
+
+        return this.#items.map(item => new MenuItem(item.id, item.name, item.category, item.price, item.description, item.image));
+    }
+
+    /**
+     * Finds and returns the category object with the given id, or undefined if none.
+     * @param id 
+     */
+    getCategory(id: number): object | undefined {
+        if (!this.#constructed) {
+            throw new Error(`Cannot use Menu before construction finalization.`);
+        }
+
+        return this.#categories.find((cat: any) => cat.idCategoria == id);
+    }
+
+    getAllCategories(): object[] {
+        if (!this.#constructed) {
+            throw new Error(`Cannot use Menu before construction finalization.`);
+        }
+
+        return this.#categories.map((cat: any) => { return {idCategoria: cat.idCategoria, categoria: cat.categoria} } );
+    }
+
+    /**
      * Returns true if the object has finished construction, false otherwise.
      */
     isReady(): boolean {
