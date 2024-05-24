@@ -16,7 +16,7 @@ if (!token) {
  * @param method The HTTP method
  * @returns The response as an object
  */
-const fetchAPI = async (path: string, method: string = 'GET', body: object | undefined = undefined, options = {}): Promise<object> => {
+const fetchAPI = async (path: string, method: string = 'GET', body: object | undefined = undefined, options = {}): Promise<object | string> => {
     if (!base) {
         throw new Error("Can't use fetchAPI() because the env variable VITE_API_URL is not defined");
     }
@@ -44,8 +44,12 @@ const fetchAPI = async (path: string, method: string = 'GET', body: object | und
     const res = await fetch(`${base}/${cleanPath}`, completeOptions);
 
     if (res.ok) {
-        const json = await res.json();
-        return json;
+        const text = await res.text();
+        try {
+            return JSON.parse(text);
+        } catch(error) {
+            return text;
+        }
     }
 
     throw new Error(`Unsuccessful request: ${res.status} ${res.statusText}`);
