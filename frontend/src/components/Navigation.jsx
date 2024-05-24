@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import './Navigation.css';
 
@@ -29,15 +28,21 @@ const Navigation = ({ paths }) => {
 
             <nav className="navigation__options">
                 {
-                    options.map((opt, i) =>
-                        <Link 
-                            key={i}
-                            className={opt.equivalentPaths.includes(location) ? currentOptClassName : optClassName}
-                            to={opt.path}
-                        >
-                            {opt.display}
-                        </Link>
-                    )
+                    options.map((opt, i) => {
+                        if (!opt.display) {
+                            return undefined;
+                        }
+
+                        return (
+                            <Link 
+                                key={i}
+                                className={opt.equivalentPaths.includes(location) ? currentOptClassName : optClassName}
+                                to={opt.path}
+                            >
+                                {opt.display}
+                            </Link>
+                        )
+                    })
                 }
             </nav>
         </nav>
