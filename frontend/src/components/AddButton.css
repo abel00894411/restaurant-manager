@@ -1,0 +1,21 @@
+.addButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--gray);
+    border-radius: 8px;
+    background-color: white;
+    color: var(--black);
+    font-weight: normal;
+    font-size: calc(var(--std-font-size) + 2px);
+}
+
+.addButton:disabled {
+    color: var(--gray);
+}
+
+.addButtonLink {
+    display: contents;
+}
