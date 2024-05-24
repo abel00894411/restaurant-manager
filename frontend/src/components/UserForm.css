@@ -1,0 +1,42 @@
+.userForm {
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+}
+
+.userForm__userType {
+    font-weight: normal;
+}
+
+.userForm__fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.userForm__fields > label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.userForm__fields > label > input,
+.userForm__fields > label > select {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: calc(inherit - 2px);
+    background-color: var(--light-gray);
+}
+
+.logout-link {
+    width: fit-content;
+    margin: auto;
+}
+
+/* Medium screen size */
+@media screen and (max-width: 450px) {
+    .userForm__fields {
+        grid-template-columns: 1fr;
+    }
+}
