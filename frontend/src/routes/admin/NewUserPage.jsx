@@ -1,6 +1,11 @@
+import UserForm from "../../components/UserForm";
+
 const NewUserPage = () => {
     return (
-        <>New user page</>
+        <>
+            <h1>Crear usuario</h1>
+            <UserForm newUser={true} exclude={['password']}/>
+        </>
     )
 };
 

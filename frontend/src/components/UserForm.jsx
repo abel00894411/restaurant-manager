@@ -4,6 +4,8 @@ import './UserForm.css';
 import devLog from '../util/devLog';
 import { menu } from '../models/Menu';
 
+const userTypes = ['MESERO', 'COCINERO', 'ADMINISTRADOR'];
+
 const UserForm = ({ userId, exclude = [], newUser = false }) => {
     if (userId && newUser) {
         devLog('Error: UserForm has userId and newUser == true');
@@ -20,7 +22,8 @@ const UserForm = ({ userId, exclude = [], newUser = false }) => {
         userType: true,
         password: true,
         hiringDate: true,
-        category: true
+        category: true,
+        logout: true
     };
 
     for (const field in fields) {
@@ -30,18 +33,36 @@ const UserForm = ({ userId, exclude = [], newUser = false }) => {
     }
 
     useEffect(() => {
-        fetchAPI(`usuario/${userId}`)
-            .then(res => {
-                setUserData({
-                    ...res.usuario,
-                    categorias: [ menu.getAllCategories()[0].categoria ], // TODO: Current categories for cook users should be obtained from the backend
-                    password: '',
-                    confirmPassword: ''
+        if (!newUser) {
+
+            fetchAPI(`usuario/${userId}`)
+                .then(res => {
+                    setUserData({
+                        ...res.usuario,
+                        categorias: [ menu.getAllCategories()[0].categoria ], // TODO: Current categories for cook users should be obtained from the backend
+                        password: '',
+                        confirmPassword: ''
+                    });
+                })
+                .catch(error => {
+                    alert('No fue posible obtener los datos del usuario');
                 });
+
+        } else {
+
+            setUserData({
+                id: '',
+                nombre: '',
+                apellido: '',
+                rfc: '',
+                sueldo: '',
+                puesto: userTypes[0],
+                categorias: [ menu.getAllCategories()[0].categoria ],
+                password: '',
+                confirmPassword: ''
             })
-            .catch(error => {
-                alert('No fue posible obtener los datos del usuario');
-            });
+
+        }
     }, []);
 
     if (!userData) {
@@ -76,7 +97,7 @@ const UserForm = ({ userId, exclude = [], newUser = false }) => {
 
     const submit = () => {
         const { password, confirmPassword } = userData;
-        console.log(userData);
+        
         if (password && (password != confirmPassword)) {
             alert(`Las contraseñas no coinciden`);
             return;
@@ -108,15 +129,36 @@ const UserForm = ({ userId, exclude = [], newUser = false }) => {
             sueldo: userData.sueldo,
             categorias: userData?.categorias
         };
+
+        const newUserBody = {
+            ...updateUserBody,
+            rol: userData.puesto
+        }
         
-        fetchAPI(`usuario/${userId}`, 'PUT', updateUserBody)
-            .then(res => {
-                alert('Usuario actualizado con éxito');
-            })
-            .catch(error => {
-                alert('No fue posible actualizar los datos');
-                devLog(`PUT (update data): ${error.message}`)
-            });
+        if (newUser) {
+            
+            fetchAPI('usuarios', 'POST', newUserBody)
+                .then(res => {
+                    alert(`Usuario creado con éxito\nContraseña del nuevo usuario: ${res.password}`);
+                    location.assign(`/usuarios/editar/${res.idUsuario}`);
+                })
+                .catch(error => {
+                    alert('No fue posible crear el nuevo usuario');
+                    devLog(`POST (create user): ${error.message}`);
+                });
+
+        } else {
+
+            fetchAPI(`usuario/${userId}`, 'PUT', updateUserBody)
+                .then(res => {
+                    alert('Usuario actualizado con éxito');
+                })
+                .catch(error => {
+                    alert('No fue posible actualizar los datos');
+                    devLog(`PUT (update data): ${error.message}`)
+                });
+
+        }
 
     }
 
@@ -128,11 +170,24 @@ const UserForm = ({ userId, exclude = [], newUser = false }) => {
     return (
         <form className='userForm'>
             
-            { fields.userType && <h5 className='userForm__userType'>{userData.puesto}</h5> }
+            { fields.userType && !newUser && <h5 className='userForm__userType'>{userData.puesto}</h5> }
 
-            { fields.hiringDate && <p>Contratado el {userData.fechaContratacion}</p> }
+            { fields.hiringDate && !newUser && <p>Contratado el {userData.fechaContratacion}</p> }
 
             <div className="userForm__fields">
+                { fields.userType && newUser && (
+                    <label>
+                        Puesto
+                        <select name="puesto" value={userData.puesto} onChange={handleChange}>
+                            {userTypes.map((type, i) => {
+                                return (
+                                    <option value={type} key={i}>{type}</option>
+                                );
+                            })}
+                        </select>
+                    </label>
+                )}
+
                 { fields.name && (
                     <label>
                         Nombre
@@ -161,7 +216,7 @@ const UserForm = ({ userId, exclude = [], newUser = false }) => {
                     </label>
                 )}
 
-                { fields.category && userData.puesto == 'COCINERO' && (
+                { fields.category && userData.puesto == userTypes[1] && (
                     <label>
                         Categoría de cocinero
                         <select name="categorias" value={userData.categorias[0]} onChange={handleChange}>
@@ -195,7 +250,7 @@ const UserForm = ({ userId, exclude = [], newUser = false }) => {
             )}
 
             <button type='button' onClick={submit}>{ newUser ? 'Crear usuario' : 'Guardar cambios' }</button>
-            <a className='logout-link' onClick={logout}>Cerrar sesión</a>
+            {fields.logout && <a className='logout-link' onClick={logout}>Cerrar sesión</a>}
 
         </form>
     );

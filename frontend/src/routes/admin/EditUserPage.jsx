@@ -10,6 +10,7 @@ const EditUserPage = () => {
 
     if (getTokenData().idUsuario != userId) {
         exclude.push('password');
+        exclude.push('logout');
     }
 
     return (
