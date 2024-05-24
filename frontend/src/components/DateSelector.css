@@ -1,0 +1,10 @@
+.dateSelector {
+    display: inline;
+    margin: 0 6px;
+    width: fit-content;
+    padding: 4px 8px;
+    background-color: var(--light-gray);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: inherit;
+}
