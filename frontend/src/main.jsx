@@ -78,6 +78,13 @@ const adminPaths = [
         display: 'Usuarios'
     },
     {
+        path: '/usuarios/editar/:idUsuario',
+        element: <Admin.EditUserPage />
+    },
+    {   path: '/usuarios/nuevo',
+        element: <Admin.NewUserPage />
+    },
+    {
         path: '/menu',
         element: <Admin.MenuPage />,
         display: 'Menú'
