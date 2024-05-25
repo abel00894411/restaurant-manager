@@ -3,11 +3,11 @@ import './Login.css';
 
 function Login() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="login">
+      <header className="login-header">
         <h1>[ LOGO ]</h1>
       </header>
-      <main>
+      <div>
         <h2>¡Bienvenido a nuestro restaurante!</h2>
         <div className="login-box">
           <h3>Empleado, inicia sesión</h3>
@@ -27,7 +27,7 @@ function Login() {
           <a href="/facturas">Genera tus facturas &gt;</a>
           <a href="/menu">Mira nuestro menú &gt;</a>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

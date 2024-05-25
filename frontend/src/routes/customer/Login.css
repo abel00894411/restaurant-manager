@@ -1,15 +1,11 @@
 
-.App {
+.login {
     text-align: center;
     font-family: Arial, sans-serif;
   }
   
-  .App-header {
+  .login-header {
     margin-top: 20px;
-  }
-  
-  main {
-    margin-top: 50px;
   }
   
   .login-box {
@@ -34,20 +30,6 @@
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-  
-  button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    border: none;
-    background-color: green;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: darkgreen;
   }
   
   .clientes {

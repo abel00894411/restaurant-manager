@@ -7,11 +7,11 @@ const InvoiceForm = () => {
       <header className="invoice-form-header">
         <h1>[ LOGO ]</h1>
       </header>
-      <main>
+      <div className='form-main'>
         <h2>Genera tu factura</h2>
         <div className="form-box">
           <h3>Por favor, introduce tus datos</h3>
-          <form>
+          <form className='invoice-form'>
             <label>
               RFC
               <input type="text" name="rfc" />
@@ -32,7 +32,7 @@ const InvoiceForm = () => {
             <button type="submit">Buscar orden</button>
           </form>
         </div>
-      </main>
+      </div >
     </div>
   );
 };
