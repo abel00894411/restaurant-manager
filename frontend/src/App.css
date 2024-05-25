@@ -124,6 +124,21 @@ th {
     font-weight: bold;
 }
 
+form label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form input,
+form select {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: calc(inherit - 2px);
+    background-color: var(--light-gray);
+}
+
 .employee-layout {
     display: grid;
     grid-template-columns: 240px 1fr;
