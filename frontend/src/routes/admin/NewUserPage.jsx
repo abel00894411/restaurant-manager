@@ -4,7 +4,7 @@ const NewUserPage = () => {
     return (
         <>
             <h1>Crear usuario</h1>
-            <UserForm newUser={true} exclude={['password']}/>
+            <UserForm newUser={true} exclude={['password', 'logout']}/>
         </>
     )
 };
