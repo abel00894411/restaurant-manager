@@ -109,7 +109,7 @@ const customerPaths = [
     },
     {
         path: '/facturas',
-        element: <Customer.Facturas />,
+        element: <Customer.InvoicePage />,
         display: 'Invoice'
     }
 ];
