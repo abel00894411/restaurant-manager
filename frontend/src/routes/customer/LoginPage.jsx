@@ -1,34 +1,36 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Login.css'; 
 
 function Login() {
   return (
-    <div className="login">
-      <header className="login-header">
-        <h1>[ LOGO ]</h1>
-      </header>
-      <div>
-        <h2>¡Bienvenido a nuestro restaurante!</h2>
-        <div className="login-box">
-          <h3>Empleado, inicia sesión</h3>
-          <form>
-            <label>
-              RFC
-              <input type="text" name="rfc" />
-            </label>
-            <label>
-              Contraseña
-              <input type="password" name="password" />
-            </label>
-            <button type="submit">Continuar</button>
-          </form>
-        </div>
-        <div className="clientes">
-          <a href="/facturas">Genera tus facturas &gt;</a>
-          <a href="/menu">Mira nuestro menú &gt;</a>
-        </div>
-      </div>
-    </div>
+	<div className="login">
+	  <header className="login-header">
+		<img src="/img/logo.png" alt="Logotipo" />
+	  </header>
+	  <div className='login-main'>
+		<h2>¡Bienvenido a nuestro restaurante!</h2>
+		<div className="login-box">
+		  <h4>Empleado, inicia sesión</h4>
+		  <form>
+			<label>
+			  RFC
+			  <input type="text" name="rfc" />
+			</label>
+			<label>
+			  Contraseña
+			  <input type="password" name="password" />
+			</label>
+			<button type="button">Continuar</button>
+		  </form>
+		</div>
+		<div className="clientes">
+            <h4 className='clientes__titulo'>Clientes</h4>
+			<Link to="/facturas">Genera tus facturas &gt;</Link>
+			<Link to="/menu">Mira nuestro menú &gt;</Link>
+		</div>
+	  </div>
+	</div>
   );
 }
 
