@@ -30,7 +30,7 @@ public class SubscribeStrategy implements IStrategy{
 		String role = jwtService.extractRole( token );
 
 		if(! empleados.contains( new User(token, null, id, 0)  ) ) {
-			System.out.println("entro al if de send strategy");
+			System.out.println("entro al if de suscribe strategy");
 			throw new RuntimeException("Remitente desconocido");
 		}
 		

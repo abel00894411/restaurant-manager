@@ -28,7 +28,7 @@ public interface IEmpleadoRepository extends JpaRepository<Empleado, Long>{
 					e.idEmpleado AS id,
 				    e.nombre AS nombre,
 				    e.apellido AS apellido,
-				    'MESERO' AS puesto,
+				    'ADMINISTRADOR' AS puesto,
 				    e.rfc AS rfc,
 				    e.sueldo AS sueldo,
 				    e.fechaContratacion AS fechaContratacion
@@ -56,7 +56,7 @@ public interface IEmpleadoRepository extends JpaRepository<Empleado, Long>{
 					e.idEmpleado AS id,
 				    e.nombre AS nombre,
 				    e.apellido AS apellido,
-				    'MESERO' AS puesto,
+				    'COCINERO' AS puesto,
 				    e.rfc AS rfc,
 				    e.sueldo AS sueldo,
 				    e.fechaContratacion AS fechaContratacion

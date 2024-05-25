@@ -1,5 +1,7 @@
 package com.restaurante.proyecto.repositories;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +17,9 @@ public interface IOrdenRepository extends JpaRepository<Orden, Long>{
 	@Query(value="CALL prueba()",nativeQuery = true)
 	List<Object[]> pruebaHola(); 
 	
+	
+	List<Orden> findByfechaBetween(LocalDateTime dateMin, LocalDateTime dateMax);
+	
+	Orden findByEstadoAndIdOrden(String estado, Long idOrden);
+
 }

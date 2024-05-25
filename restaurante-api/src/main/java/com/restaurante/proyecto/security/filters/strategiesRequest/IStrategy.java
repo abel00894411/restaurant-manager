@@ -65,14 +65,17 @@ public interface IStrategy {
 		return false;
 	}
 
-	default boolean isChannelSubscriptionAllowed(String route, String role, String id) {
-		route = formatear(route);
+	default boolean isChannelSubscriptionAllowed(String routeOriginal, String role, String id) {
+		String route = formatear(routeOriginal);
+		
+		System.out.println("\tid: "+id);
+		
 		for (RoutesTopic r : RoutesTopic.values()) {
 			System.out.println(route + "  ===  " + r.getPath());
 			if (r.getPath().equals(route)) {
 				List<String> permitidos = r.getRoles();
 				System.out.println(route + "  ===  " + permitidos);
-				return permitidos.contains(role);
+				return permitidos.contains(role) && permitIdSuscribe(id, routeOriginal);
 			}
 		}
 		return false;
@@ -91,6 +94,24 @@ public interface IStrategy {
 			}
 		}
 		return route;
+	}
+	
+	
+	private boolean permitIdSuscribe(String id, String route) {
+
+		String[] dividido = route.split("/");
+		for (int i = 0; i < dividido.length; i++) {
+			System.out.println(dividido[i]);
+		}
+		
+		System.out.println(dividido[dividido.length - 1]);
+		try {
+			Integer idPassed = Integer.parseInt(dividido[dividido.length - 1]);			
+			return id.equals(idPassed.toString());
+		} catch (Exception e) {
+			return true;
+		}
+
 	}
 
 }

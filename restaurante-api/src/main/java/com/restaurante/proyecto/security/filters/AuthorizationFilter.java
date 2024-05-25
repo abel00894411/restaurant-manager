@@ -57,19 +57,13 @@ public class AuthorizationFilter extends OncePerRequestFilter{
 			String authHeader = request.getHeader("Authorization")==null? "":request.getHeader("Authorization");
 			System.out.println("Ingresa al filtro");
 			if(authHeader == "" || !authHeader.startsWith("Bearer ")) {
-	//			throw new UnauthorizedException("SIN CREDENCIALES VALIDAS");
-	//			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-	//			Map<String, String> body = new HashMap<String, String>();
-	//			body.put("mensaje", "Credenciales de acceso incorrectas");
-	//			response.setStatus(HttpStatus.UNAUTHORIZED.value());
-	//			response.getWriter().write(mapper.writeValueAsString(body));
-	//			response.getWriter().flush();
-	//			filterChain.doFilter(request, response);
+				
 				filterChain.doFilter(request, response);
 				return;
 			}
 			
-			// me parece que estas ya arrojaan excepcion
+			
+			
 			String jwt = authHeader.split(" ")[1];
 			Long id = Long.parseLong(jwtService.extractIdUsuario(jwt));
 			UserDetails user = userDetailsService.loadUserById(id);
