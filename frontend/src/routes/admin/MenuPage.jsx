@@ -1,5 +1,12 @@
+import AdminMenu from "../../components/AdminMenu";
+
 const MenuPage = () => {
-    return <> Menu page </>
+    return (
+        <>
+            <h1>Menú</h1>
+            <AdminMenu />
+        </>
+    );
 };
 
 export default MenuPage;
