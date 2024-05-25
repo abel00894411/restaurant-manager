@@ -6,7 +6,7 @@ import { menu } from '../models/Menu';
 
 const userTypes = ['MESERO', 'COCINERO', 'ADMINISTRADOR'];
 
-const UserForm = ({ userId, exclude = [], newUser = false }) => {
+const UserForm = ({ userId, exclude = [], newUser = false, passwordOnly = false }) => {
     if (userId && newUser) {
         devLog('Error: UserForm has userId and newUser == true');
         return <>...</>
@@ -147,7 +147,7 @@ const UserForm = ({ userId, exclude = [], newUser = false }) => {
                     devLog(`POST (create user): ${error.message}`);
                 });
 
-        } else {
+        } else if (!passwordOnly) {
 
             fetchAPI(`usuario/${userId}`, 'PUT', updateUserBody)
                 .then(res => {
@@ -191,35 +191,35 @@ const UserForm = ({ userId, exclude = [], newUser = false }) => {
                 { fields.name && (
                     <label>
                         Nombre
-                        <input autoComplete="off" type="text" name="nombre" value={userData.nombre} onChange={handleChange}/>
+                        <input autoComplete="off" type="text" name="nombre" value={userData.nombre} onChange={handleChange} disabled={passwordOnly} />
                     </label>
                 )}
 
                 { fields.lastName && (
                     <label>
                         Apellidos
-                        <input autoComplete="off" type="text" name="apellido" value={userData.apellido} onChange={handleChange}/>
+                        <input autoComplete="off" type="text" name="apellido" value={userData.apellido} onChange={handleChange} disabled={passwordOnly} />
                     </label>
                 )}
 
                 { fields.rfc && (
                     <label>
                         RFC
-                        <input autoComplete="off" type="text" name="rfc" value={userData.rfc} onChange={handleChange}/>
+                        <input autoComplete="off" type="text" name="rfc" value={userData.rfc} onChange={handleChange} disabled={passwordOnly} />
                     </label>
                 )}
 
                 { fields.salary && (
                     <label>
                         Sueldo
-                        <input autoComplete="off" type="text" name="sueldo" value={userData.sueldo} onChange={handleChange}/>
+                        <input autoComplete="off" type="text" name="sueldo" value={userData.sueldo} onChange={handleChange} disabled={passwordOnly} />
                     </label>
                 )}
 
                 { fields.category && userData.puesto == userTypes[1] && (
                     <label>
                         Categoría de cocinero
-                        <select name="categorias" value={userData.categorias[0]} onChange={handleChange}>
+                        <select name="categorias" value={userData.categorias[0]} onChange={handleChange} disabled={passwordOnly} >
                             {menu.getAllCategories().map((cat, i) => {
                                 return (
                                     <option key={i} value={cat.categoria}>
