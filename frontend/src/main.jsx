@@ -32,6 +32,10 @@ const waiterPaths = [
         display: 'Órdenes'
     },
     {
+        path: '/ordenes/:idOrden',
+        element: <Waiter.OrderDetailsPage />
+    },
+    {
         path: '/perfil',
         element: <Waiter.ProfilePage />,
         display: 'Perfil'
