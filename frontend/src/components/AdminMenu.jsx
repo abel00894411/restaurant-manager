@@ -49,7 +49,7 @@ const AdminMenu = () => {
             { categories.map((category, i) => {
 
                 return (
-                    <div className="adminMenu__category thin-border" key={i}>
+                    <div className="adminMenu__category" key={i}>
                         <div className="adminMenu__category__title-container">
                             <h4 className="adminMenu__category__title-container__title">{category.categoria}</h4>
                             <div className="adminMenu__category__title-container__buttons">
