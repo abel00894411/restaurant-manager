@@ -1,6 +1,6 @@
 import './RecentActivityBox.css';
 
-const ActivityHistory = ({ historyList = [], height = 320 }) => {
+const ActivityHistory = ({ historyList = [], height = 240 }) => {
     return (
         <div className="activityHistory" style={ { height: `${height}px` } }>
             {historyList.map((log, i) => {
