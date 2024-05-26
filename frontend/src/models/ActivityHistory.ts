@@ -1,4 +1,6 @@
 import IActivityLog from "../interfaces/IActivityLog";
+import useEventListener from '../hooks/useEventListener';
+import IAssignedOrderEvent from "../interfaces/IAssignedOrderEvent";
 
 /**
  * Stores activity history for a waiter user
@@ -6,10 +8,18 @@ import IActivityLog from "../interfaces/IActivityLog";
 class ActivityHistory {
     #activityList: IActivityLog[] = [];
 
-    constructor() {}
+    constructor() {
+        // TODO: Listen to more types of events and add format to messages
+        
+        useEventListener('assignedOrder', (event) => {
+            const { order } = (event as IAssignedOrderEvent).detail;
+            this.#activityList.push({ log: `Se te ha asignado una nueva orden #${order.id}`, date: new Date() });
+        });
+
+    }
 
     getRecent(): IActivityLog[] {
-        return [ ... this.#activityList ];
+        return [ ...this.#activityList ].reverse();
     }
 
     push(activity: IActivityLog) {
