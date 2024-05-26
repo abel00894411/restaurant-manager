@@ -90,6 +90,10 @@ const adminPaths = [
         display: 'Menú'
     },
     {
+        path: '/menu/editar/:idMenu',
+        element: <Admin.EditMenuPage />
+    },
+    {
         path: '/informes',
         element: <Admin.ReportsPage />,
         display: 'Informes'
