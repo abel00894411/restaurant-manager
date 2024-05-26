@@ -1,12 +1,16 @@
 import './RecentActivityBox.css';
 
 const ActivityHistory = ({ historyList = [], height = 240 }) => {
+    if (historyList.length == 0) {
+        return <>Sin actividad para mostrar</>;
+    }
+
     return (
         <div className="activityHistory" style={ { height: `${height}px` } }>
             {historyList.map((log, i) => {
                 const { date } = log;
                 const hour = date.getHours();
-                const min = date.getMinutes()
+                const min = date.getMinutes();
                 const sec = date.getSeconds();
         
                 const fHour = (hour == 0) ? 12
