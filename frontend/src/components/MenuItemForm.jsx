@@ -3,6 +3,7 @@ import fetchAPI from '../util/fetchAPI';
 import devLog from '../util/devLog';
 import { menu } from '../models/Menu';
 import './MenuItemForm.css';
+import fromArrayBufferToBase64 from '../util/fromArrayBufferToBase64';
 
 const MenuItemForm = ({ menuItemId, newMenuItem = false }) => {
     if (menuItemId && newMenuItem) {
@@ -16,7 +17,7 @@ const MenuItemForm = ({ menuItemId, newMenuItem = false }) => {
         name: '',
         price: '',
         description: '',
-        categoryId: '',
+        categoryId: menu.getAllCategories()[0].idCategoria,
         image: ''
     };
 
@@ -24,7 +25,7 @@ const MenuItemForm = ({ menuItemId, newMenuItem = false }) => {
         name: localItemData?.name,
         price: localItemData?.price,
         description: localItemData?.description,
-        categoryId: menu.getAllCategories().find(cat => cat.categoria == localItemData.category)?.idCategoria,
+        categoryId: menu.getAllCategories().find(cat => cat.categoria == localItemData?.category)?.idCategoria,
         image: localItemData?.image
     };
 
@@ -34,6 +35,12 @@ const MenuItemForm = ({ menuItemId, newMenuItem = false }) => {
         const input = event.target;
 
         if (input.name == 'image') {
+            setmenuItemData(oldData => {
+                return {
+                    ...oldData,
+                    [input.name]: input.files[0]
+                }
+            });
 
             return;
         }
@@ -46,7 +53,7 @@ const MenuItemForm = ({ menuItemId, newMenuItem = false }) => {
         });
     }
 
-    const submit = () => {
+    const submit = async () => {
 
         const updateMenuItemBody = {
             producto: menuItemData.name,
@@ -57,7 +64,7 @@ const MenuItemForm = ({ menuItemId, newMenuItem = false }) => {
 
         const newMenuItemBody = {
             ...updateMenuItemBody,
-            imagen: menuItemData.image
+            imagen: newMenuItem ? fromArrayBufferToBase64( await menuItemData.image.arrayBuffer() ) : undefined
         };
         
         if (newMenuItem) {
@@ -65,7 +72,7 @@ const MenuItemForm = ({ menuItemId, newMenuItem = false }) => {
             fetchAPI('menu', 'POST', newMenuItemBody)
                 .then(res => {
                     alert(`Ítem creado con éxito`);
-                    location.assign(`/menu/editar/${res.itemMenu.id}`);
+                    location.assign(`/menu`);
                 })
                 .catch(error => {
                     alert('No fue posible crear el nuevo ítem');
@@ -126,7 +133,7 @@ const MenuItemForm = ({ menuItemId, newMenuItem = false }) => {
                 { newMenuItem &&
                     <label>
                         Foto
-                        <input autoComplete="off" type="file" name="image" onChange={handleChange} />
+                        <input autoComplete="off" type="file" name="image" accept='image/jpg, image/jpeg' onChange={handleChange} />
                     </label>
                 }
                 

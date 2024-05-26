@@ -5,3 +5,4 @@ export { default as ReportsPage } from './ReportsPage';
 export { default as EditUserPage } from './EditUserPage';
 export { default as NewUserPage } from './NewUserPage';
 export { default as EditMenuPage } from './EditMenuPage';
+export { default as NewMenuItemPage } from './NewMenuItemPage';
