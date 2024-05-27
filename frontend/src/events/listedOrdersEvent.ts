@@ -12,7 +12,7 @@ const listedOrdersEvent: IEventFunction = (message: Message): IListedOrdersEvent
     const list: [] = body.ordenes;
 
     const orders = list.map((order: any) => {
-        const orderObj = new Order(order.idOrden, order.fecha, order.estado);
+        const orderObj = new Order(order.idOrden, new Date(order.fecha), order.estado);
 
         const items = order.items;
 
