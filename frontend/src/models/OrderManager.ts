@@ -88,14 +88,30 @@ class OrderManager extends JobManager {
 
         document.addEventListener('assignedOrder', (event) => {
             const detail = (event as IAssignedOrderEvent).detail;
-            const { order } = detail;
-            this.list.push(order as (Order & OrderItem));
+            const { order } = detail; // 'order' is frozen
+
+            const newOrder = new Order(order.id, order.date, order.state);
+            for (const item of order.getItems()) {
+                newOrder.setItem(new OrderItem(item.id, item.orderId, item.menuItemId, item.state, item.quantity, item.creationDateTime));
+            }
+
+            this.list.push(newOrder as (Order & OrderItem));
         });
 
         document.addEventListener('listedOrders', (event) => {
             const detail = (event as IListedOrdersEvent).detail;
-            const { orders } = detail;
-            this.list = Array.from(orders);
+            const { orders } = detail; // each order in 'orders' is frozen
+
+            const newOrders: Order[] = [];
+            for (const order of orders) {
+                const newOrder = new Order(order.id, order.date, order.state);
+                for (const item of order.getItems()) {
+                    newOrder.setItem(new OrderItem(item.id, item.orderId, item.menuItemId, item.state, item.quantity, item.creationDateTime));
+                }
+                newOrders.push(newOrder);
+            }
+
+            this.list = newOrders;
         });
 
         document.addEventListener('finishedOrder', (event) => {
