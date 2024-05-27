@@ -7,7 +7,7 @@ import { Message } from 'stompjs';
  */
 const createdOrderEvent: IEventFunction = (message: Message): ICreatedOrderEvent => {
     const body = JSON.parse(message.body);
-    const { idMesero, mesero } = body?.items;
+    const { idMesero, mesero } = body;
 
     const detail = {
         waiterId: idMesero,
