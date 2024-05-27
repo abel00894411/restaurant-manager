@@ -32,6 +32,10 @@ const OrdersPage = () => {
 
             <div className="ordersPage__orderCards">
                 { jobManager.getAll().map((order, i) => {
+                    if (order.state == 'DESPACHADA') {
+                        return;
+                    }
+
                     return (
                         <OrderCard order={order} key={i} />
                     );
