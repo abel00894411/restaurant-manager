@@ -1,12 +1,31 @@
 import { useState } from 'react';
 import { menu } from '../models/Menu';
+import { orderEditorManager } from '../models/OrderEditorManager';
 import './Menu.css';
+
+// NOTE: As there is no state, the menu doesn't react to changes to orderEditorManager, so the update is forced with setTriggerUpdate
 
 const currencyFormatter = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 });
 const categoryColors = ['#e74c3c', '#f39c12', '#3498db', '#1abc9c']
 
+const onAddButtonClick = (menuItemId, setTriggerUpdate) => {
+    const item = menu.getItem(menuItemId);
+
+    const quantity = Number(prompt(`¿Cuántos ${item.name} deseas añadir a la orden?`));
+
+    if (!quantity || isNaN(quantity)) {
+        return;
+    }
+
+    orderEditorManager.addItem(menuItemId, quantity);
+
+    // TEMPORAL FIX
+    setTriggerUpdate(old => old+1);
+}
+
 const Menu = () => {
     const [currentCategory, setCurrentCategory] = useState(menu.getAllCategories()[0].categoria);
+    const [triggerUpdate, setTriggerUpdate] = useState(undefined); // TEMPORAL FIX
 
     const formatCategoryName = (category) => {
         const firstLetter = category[0].toUpperCase();
@@ -29,6 +48,9 @@ const Menu = () => {
                                         <p className="menu__content__items__item__name">{item.name}</p>
                                         <p className="menu__content__items__item__price">{currencyFormatter.format(item.price)}</p>
                                         {!!item.description && <p className='menu__content__items__item__description'>{item.description}</p> }
+                                        { orderEditorManager.onEditionMode &&
+                                            <button type="button" className="menu__content__items__item__add-button" onClick={()=>onAddButtonClick(item.id, setTriggerUpdate)}>+</button>
+                                        }
                                     </div>
                                 </div>
                             );
