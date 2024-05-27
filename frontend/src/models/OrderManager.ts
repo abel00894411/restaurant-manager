@@ -126,7 +126,7 @@ class OrderManager extends JobManager {
             }
         });
 
-        document.addEventListener('updatedOrderItems', (event) => {
+        document.addEventListener('updatedOrderItem', (event) => {
             const detail = (event as IUpdatedOrderItem).detail;
             const { item } = detail;
 
