@@ -23,6 +23,9 @@
 }
 
 .form-box {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     padding: 20px;
@@ -66,4 +69,14 @@
 .invoice-form input[type="email"]:focus {
     border-color: #00b140;
     outline: none;
+}
+
+.invoice-item {
+
+}
+
+.invoice-item li {
+    display: list-item;
+    list-style: circle;
+    margin-left: 16px;
 }
