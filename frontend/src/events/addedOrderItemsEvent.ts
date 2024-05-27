@@ -6,7 +6,7 @@ import IAddedOrderItemsEvent from "../interfaces/IAddedOrderItemsEvent";
 /**
  * Creates an event for new messages from topic/items/agregados/{id}. For cook users.
  */
-const listedOrderItemsEvent: IEventFunction = (message: Message): IAddedOrderItemsEvent => {
+const addedOrderItemsEvent: IEventFunction = (message: Message): IAddedOrderItemsEvent => {
     const body = JSON.parse(message.body);
     const { idOrden, items } = body;
     
@@ -24,4 +24,4 @@ const listedOrderItemsEvent: IEventFunction = (message: Message): IAddedOrderIte
     return new CustomEvent('addedOrderItems', { detail });
 }
 
-export default listedOrderItemsEvent;
+export default addedOrderItemsEvent;

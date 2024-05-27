@@ -7,7 +7,7 @@ import OrderItem from "../models/OrderItem";
 /**
  * Creates an event for new messages from topic/ordenes/listados/{id}. For waiter users.
  */
-const listedOrderItemsEvent: IEventFunction = (message: Message): IListedOrdersEvent => {
+const listedOrdersEvent: IEventFunction = (message: Message): IListedOrdersEvent => {
     const body = JSON.parse(message.body);
     const list: [] = body.ordenes;
 
@@ -34,4 +34,4 @@ const listedOrderItemsEvent: IEventFunction = (message: Message): IListedOrdersE
     return new CustomEvent('listedOrders', { detail });
 }
 
-export default listedOrderItemsEvent;
+export default listedOrdersEvent;

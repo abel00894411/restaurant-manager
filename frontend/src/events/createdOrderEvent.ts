@@ -5,7 +5,7 @@ import { Message } from 'stompjs';
 /**
  * Creates an CustomEvent for new messages from topic/ordenes/creadas/{id}. For waiter users.
  */
-const assignedOrderItemEvent: IEventFunction = (message: Message): ICreatedOrderEvent => {
+const createdOrderEvent: IEventFunction = (message: Message): ICreatedOrderEvent => {
     const body = JSON.parse(message.body);
     const { idMesero, mesero } = body?.items;
 
@@ -19,4 +19,4 @@ const assignedOrderItemEvent: IEventFunction = (message: Message): ICreatedOrder
     return new CustomEvent('createdOrder', { detail });
 }
 
-export default assignedOrderItemEvent;
+export default createdOrderEvent;

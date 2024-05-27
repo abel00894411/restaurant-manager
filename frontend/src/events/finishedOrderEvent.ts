@@ -5,7 +5,7 @@ import IFinishedOrderEvent from "../interfaces/IFinishedOrderEvent";
 /**
  * Creates an event for new messages from topic/ordenes/terminadas/{id}. For waiter users.
  */
-const listedOrderItemsEvent: IEventFunction = (message: Message): IFinishedOrderEvent => {
+const finishedOrderEvent: IEventFunction = (message: Message): IFinishedOrderEvent => {
     const body = JSON.parse(message.body);
     const { idOrden, subtotal, iva, total } = body;
 
@@ -21,4 +21,4 @@ const listedOrderItemsEvent: IEventFunction = (message: Message): IFinishedOrder
     return new CustomEvent('finishedOrder', { detail });
 }
 
-export default listedOrderItemsEvent;
+export default finishedOrderEvent;

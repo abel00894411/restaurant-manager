@@ -7,7 +7,7 @@ import Order from "../models/Order";
 /**
  * Creates an CustomEvent for new messages from topic/ordenes/asignados/{id}. For waiter users.
  */
-const updatedOrderItemEvent: IEventFunction = (message: Message): IAssignedOrderEvent => {
+const assignedOrderEvent: IEventFunction = (message: Message): IAssignedOrderEvent => {
     const body = JSON.parse(message.body);
     
     const { idOrden, fecha, subtotal, estado, items } = body.orden;
@@ -27,4 +27,4 @@ const updatedOrderItemEvent: IEventFunction = (message: Message): IAssignedOrder
     return new CustomEvent('assignedOrder', { detail });
 }
 
-export default updatedOrderItemEvent;
+export default assignedOrderEvent;
