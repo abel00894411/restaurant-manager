@@ -31,6 +31,10 @@ const OrderTable = ({ order }) => {
                 }
             }
 
+            if (index === undefined) {
+                return oldList;
+            }
+
             oldList[index].state = item.state;
             return [...oldList];
         });
