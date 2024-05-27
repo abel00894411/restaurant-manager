@@ -1,0 +1,16 @@
+.orderDetailsPage__title {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+}
+
+.orderDetailsPage__title__time {
+    color: var(--gray);
+    text-align: center;
+}
+
+.orderDetailsPage__state {
+    text-align: center;
+    font-weight: bold;
+}

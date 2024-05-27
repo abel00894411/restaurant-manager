@@ -1,0 +1,20 @@
+.orderTable tbody td {
+    position: relative;
+}
+
+.orderTable tfoot a {
+    display: contents;
+    color: inherit;
+}
+
+.orderTable tfoot td {
+    vertical-align: middle;
+    color: var(--gray);
+}
+
+.orderTable__finishBtn {
+    position: absolute;
+    left: 75%;
+    top: 0;
+    bottom: 0;
+}

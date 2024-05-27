@@ -1,6 +1,6 @@
 import './SmallButton.css';
 
-const SmallButton = ({ icon, onClick = ()=>{}, size = 24 }) => {
+const SmallButton = ({ icon, onClick = ()=>{}, size = 24, className }) => {
     const buttonStyle = {
         width: `${size}px`,
         height: `${size}px`
@@ -28,7 +28,7 @@ const SmallButton = ({ icon, onClick = ()=>{}, size = 24 }) => {
     }
 
     return (
-        <button onClick={onClick} style={buttonStyle} className='smallButton'>
+        <button onClick={onClick} style={buttonStyle} className={`smallButton ${className}`}>
             <span className="material-symbols-outlined" style={iconStyle}>{iconCode}</span>
         </button>
     );
