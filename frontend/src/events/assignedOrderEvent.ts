@@ -11,7 +11,7 @@ const assignedOrderEvent: IEventFunction = (message: Message): IAssignedOrderEve
     const body = JSON.parse(message.body);
     
     const { idOrden, fecha, subtotal, estado, items } = body.orden;
-    const order = new Order(idOrden, fecha, estado);
+    const order = new Order(idOrden, new Date(fecha), estado);
 
     for (const item of items) {
         const orderItem = new OrderItem(item.idItemOrden, idOrden, item.idItemMenu, item.estado, item.cantidad);
