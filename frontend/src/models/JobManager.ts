@@ -97,7 +97,11 @@ abstract class JobManager {
     getAll(): Order[] | OrderItem[] {
         return this.list.map(item => {
             if (item instanceof Order) {
-                return new Order(item.id, item.date, item.state);
+                const orderCopy = new Order(item.id, item.date, item.state);
+                for (const orderItem of item.getItems()) {
+                    orderCopy.setItem(orderItem);
+                }
+                return orderCopy;
             } else if (item instanceof OrderItem) {
                 return new OrderItem(item.id, item.orderId, item.menuItemId, item.state, item.quantity, item.creationDateTime);
             } else {
