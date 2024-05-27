@@ -7,8 +7,8 @@ import './Dashboard.css';
 
 const Dashboard = () => {
     const orders = jobManager.getAll();
-    const activeOrders = orders.map(order => order.state == 'ACTIVA');
-    const finishedOrders = orders.map(order => order.state == 'DESPACHADA');
+    const activeOrders = orders.filter(order => order.state == 'ACTIVA');
+    const finishedOrders = orders.filter(order => order.state == 'DESPACHADA');
     return (
         <>
             <DateTime />
