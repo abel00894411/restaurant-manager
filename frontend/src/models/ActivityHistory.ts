@@ -1,5 +1,4 @@
 import IActivityLog from "../interfaces/IActivityLog";
-import useEventListener from '../hooks/useEventListener';
 import IAssignedOrderEvent from "../interfaces/IAssignedOrderEvent";
 
 /**
@@ -11,7 +10,7 @@ class ActivityHistory {
     constructor() {
         // TODO: Listen to more types of events and add format to messages
         
-        useEventListener('assignedOrder', (event) => {
+        document.addEventListener('assignedOrder', (event) => {
             const { order } = (event as IAssignedOrderEvent).detail;
             this.#activityList.push({ log: `Se te ha asignado una nueva orden #${order.id}`, date: new Date() });
         });
