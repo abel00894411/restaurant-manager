@@ -14,3 +14,25 @@
     text-align: center;
     font-weight: bold;
 }
+
+.orderDetailsPage__subtotal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+}
+
+.orderDetailsPage__subtotal__title {
+    font-size: var(--h4-font-size);
+    font-weight: bold;
+    text-align: inherit;
+}
+
+.orderDetailsPage__subtotal__quantity {
+    font-size: var(--std-font-size);
+    text-align: inherit;
+}
+
+.orderDetailsPage__finish-order-button {
+    background-color: var(--secondary);
+}

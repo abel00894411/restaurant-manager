@@ -1,8 +1,13 @@
 import { useLocation } from "react-router-dom";
+import { useState } from "react";
 import OrderTable from "../../components/OrderTable";
 import { jobManager } from "../../util/jobManager";
-import './OrderDetailsPage.css';
 import Order from "../../models/Order";
+import useEventListener from "../../hooks/useEventListener";
+import { Navigate } from "react-router-dom";
+import './OrderDetailsPage.css';
+
+const currencyFormatter = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 });
 
 const OrderDetailsPage = () => {
     const url = useLocation().pathname;
@@ -13,6 +18,11 @@ const OrderDetailsPage = () => {
         return (
             <>Sin datos para la orden</>
         );
+    }
+
+    const onFinishButtonClick = () => {
+        const newOrder = new Order(orderId, undefined, 'DESPACHADA');
+        jobManager.set(newOrder);
     }
 
     const date = order.date;
@@ -29,8 +39,16 @@ const OrderDetailsPage = () => {
 
     const formattedState = `${order.state[0].toUpperCase()}${order.state.slice(1).toLowerCase()}`;
 
+    const [triggerUpdate, setTriggerUpdate] = useState(0);
+    const [redirect, setRedirect] = useState(undefined);
+
+    useEventListener('updatedOrderItem', () => setTriggerUpdate(old => old+1));
+    useEventListener('finishedOrder', () => setTimeout(()=>setRedirect('/ordenes'), 500)); // Temporal fix (the timeout)
+
     return (
         <>
+            { redirect && <Navigate to={redirect} /> }
+
             <div className="orderDetailsPage__title">
                 <h1>Orden #{order.id}</h1>
                 <p className="orderDetailsPage__title__time">{`${fHour}:${fMin}${amPm}`}</p>
@@ -39,6 +57,15 @@ const OrderDetailsPage = () => {
             <h3 className="orderDetailsPage__state">{formattedState}</h3>
 
             <OrderTable order={order} />
+
+            <div className="orderDetailsPage__subtotal">
+                <p className="orderDetailsPage__subtotal__title">Subtotal (sin IVA)</p>
+                <p className="orderDetailsPage__subtotal__quantity">{currencyFormatter.format(order.getSubtotal())}</p>
+            </div>
+
+            { order.getItems().every(item => item.state == 'SERVIDO') &&
+                <button type="button" className="orderDetailsPage__finish-order-button" onClick={onFinishButtonClick}>Terminar orden</button>
+            }
         </>
     );
 };
