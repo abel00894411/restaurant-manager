@@ -25,7 +25,7 @@ const onAddButtonClick = (menuItemId, setTriggerUpdate) => {
 
 const Menu = () => {
     const [currentCategory, setCurrentCategory] = useState(menu.getAllCategories()[0].categoria);
-    const [triggerUpdate, setTriggerUpdate] = useState(undefined); // TEMPORAL FIX
+    const [triggerUpdate, setTriggerUpdate] = useState(0); // TEMPORAL FIX
 
     const formatCategoryName = (category) => {
         const firstLetter = category[0].toUpperCase();
