@@ -53,13 +53,6 @@ const OrderItemCard = ({ orderItem, onClick = ()=>{}, inPreparation = false }) =
         useEventListener('resize', onResize, window);
     }
 
-    useEffect(() => {
-        const timeLabelColorUpdateInterval = setInterval(updateTimeLabelColor, timeLabelColorUpdateIntervalDelay * 1000);
-
-        return () => clearInterval(timeLabelColorUpdateInterval)
-    }, []);
-
-
     const parentClass = inPreparation ? 'orderItemCard--in-preparation' : 'orderItemCard';
 
     const date = orderItem.creationDateTime;
@@ -72,6 +65,13 @@ const OrderItemCard = ({ orderItem, onClick = ()=>{}, inPreparation = false }) =
     const amPm = (hour > 11) ? 'p.m.' : 'a.m.';
 
     const formattedTime = `${fHour}:${fMin} ${amPm}`;
+
+    useEffect(() => {
+        const timeLabelColorUpdateInterval = setInterval(updateTimeLabelColor, timeLabelColorUpdateIntervalDelay * 1000);
+        updateTimeLabelColor();
+        
+        return () => clearInterval(timeLabelColorUpdateInterval)
+    }, []);
 
     return (
         <div className={parentClass}>
