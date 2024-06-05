@@ -3,6 +3,7 @@ import OrderItem from '../models/OrderItem';
 import SmallButton from './SmallButton';
 import { menu } from '../models/Menu';
 import useEventListener from '../hooks/useEventListener';
+import devLog from '../util/devLog';
 import './OrderItemCard.css';
 
 /**
@@ -21,11 +22,11 @@ const OrderItemCard = ({ orderItem, onClick = ()=>{}, inPreparation = false }) =
     const initialInPreparationButtonSize = window.innerWidth < resizeBreakpoint ? buttonSmallSize : buttonBigSize;
 
     const timeLabelColorDuration = 60 * 10; // In seconds
-    const timeLabelColorUpdateIntervalDelay = 10; // In seconds
+    const timeLabelColorUpdateIntervalDelay = 20; // In seconds
 
     const [ buttonSize, setButtonSize ] = useState(inPreparation ? initialInPreparationButtonSize : buttonSmallSize);
     const [ timeLabelCompact, setTimeLabelCompact ] = useState(window.innerWidth < resizeBreakpoint);
-    const [ timeLabelColor, setTimeLabelColor ] = useState('var(--gray)');
+    const [ timeLabelColor, setTimeLabelColor ] = useState(undefined);
 
     const onResize = (event) => {
         const onSmallScreen = window.innerWidth < resizeBreakpoint;
@@ -35,7 +36,7 @@ const OrderItemCard = ({ orderItem, onClick = ()=>{}, inPreparation = false }) =
     };
 
     const updateTimeLabelColor = () => {
-        const cardLifetime = (Date.now() - date.getTime()) / 1000; // In seconds
+        const cardLifetime = (Date.now() - orderItem.creationDateTime.getTime()) / 1000; // In seconds
         let color = 'var(--gray)';
         
         if (cardLifetime > timeLabelColorDuration) {
@@ -68,11 +69,18 @@ const OrderItemCard = ({ orderItem, onClick = ()=>{}, inPreparation = false }) =
 
     useEffect(() => {
         const timeLabelColorUpdateInterval = setInterval(updateTimeLabelColor, timeLabelColorUpdateIntervalDelay * 1000);
-        updateTimeLabelColor();
         
         return () => clearInterval(timeLabelColorUpdateInterval)
     }, []);
-
+    
+    // The first color update will sometimes result in wrong colors for the time label at render time,
+    // a second update triggered by having timeLabelColor as a dependency for the following useEffect will
+    // fix the color. Because of this, the wrong color can be visible for a single frame.
+    useEffect(() => {
+        updateTimeLabelColor();
+    }, [orderItem, timeLabelColor]);
+    
+    
     return (
         <div className={parentClass}>
             
@@ -83,7 +91,10 @@ const OrderItemCard = ({ orderItem, onClick = ()=>{}, inPreparation = false }) =
                     { inPreparation && <span className="material-symbols-outlined">skillet</span> }
                 </p>
 
-                <p className={`${parentClass}__details__time`} style={{ color: timeLabelColor }}>
+                <p className={`${parentClass}__details__time`} style={{ color: timeLabelColor }}> 
+
+                    { devLog(`Color ${timeLabelColor} for ${formattedTime}`) }
+
                     <span className="material-symbols-outlined">schedule</span>
                     { (timeLabelCompact || !inPreparation) ?
                         <>{formattedTime}</>
