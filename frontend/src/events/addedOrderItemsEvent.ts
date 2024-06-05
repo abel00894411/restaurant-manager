@@ -4,7 +4,7 @@ import { Message } from 'stompjs';
 import IAddedOrderItemsEvent from "../interfaces/IAddedOrderItemsEvent";
 
 /**
- * Creates an event for new messages from topic/items/agregados/{id}. For cook users.
+ * Creates an event for new messages from topic/items/agregados/{id}. For waiter users.
  */
 const addedOrderItemsEvent: IEventFunction = (message: Message): IAddedOrderItemsEvent => {
     const body = JSON.parse(message.body);
