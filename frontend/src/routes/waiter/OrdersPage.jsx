@@ -1,18 +1,11 @@
 import AddButton from '../../components/AddButton';
 import OrderCard from '../../components/OrderCard';
-import Order from '../../models/Order';
 import { jobManager } from '../../util/jobManager';
 import { orderEditorManager } from '../../models/OrderEditorManager';
 import { Navigate } from 'react-router-dom';
-import './OrdersPage.css';
-
-
-import OrderItem from '../../models/OrderItem';
 import { useState } from 'react';
-window.jobManager = jobManager; /////////////
-window.Order = Order; ////
-window.OrderItem = OrderItem; ///////
-window.orderEditorManager = orderEditorManager;
+import useEventListener from '../../hooks/useEventListener';
+import './OrdersPage.css';
 
 const onAddButtonClick = (setTriggerUpdate) => {
     orderEditorManager.startNewOrder();
@@ -22,6 +15,14 @@ const onAddButtonClick = (setTriggerUpdate) => {
 const OrdersPage = () => {
     const [triggerUpdate, setTriggerUpdate] = useState(0);
     
+    const forceUpdate = () => {
+        setTriggerUpdate(old => old+1);
+    }
+
+    useEventListener('listedOrders', forceUpdate);
+    useEventListener('assignedOrder', forceUpdate);
+    useEventListener('finishedOrder', forceUpdate);
+
     return (
         <>
             { orderEditorManager.onEditionMode && <Navigate to='/menu' />}

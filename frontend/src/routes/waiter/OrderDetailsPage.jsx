@@ -46,7 +46,7 @@ const OrderDetailsPage = () => {
     const [redirect, setRedirect] = useState(undefined);
 
     useEventListener('updatedOrderItem', () => setTriggerUpdate(old => old+1));
-    useEventListener('finishedOrder', () => setTimeout(()=>setRedirect('/ordenes'), 500)); // Temporal fix (the timeout)
+    useEventListener('finishedOrder', () => setRedirect('/ordenes'));
 
     return (
         <>
