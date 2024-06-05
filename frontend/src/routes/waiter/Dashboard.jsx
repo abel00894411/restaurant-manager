@@ -8,7 +8,29 @@ import './Dashboard.css';
 const Dashboard = () => {
     const orders = jobManager.getAll();
     const activeOrders = orders.filter(order => order.state == 'ACTIVA');
-    const finishedOrders = orders.filter(order => order.state == 'DESPACHADA');
+    const finishedOrders = orders.filter(order => {
+        const today = new Date();
+        const currentDay = today.getDate();
+        const currentMonth = today.getMonth();
+        const currentYear = today.getFullYear();
+
+        const orderDate = order.date;
+        const orderDay = orderDate.getDate();
+        const orderMonth = orderDate.getMonth();
+        const orderYear = orderDate.getFullYear();
+
+        if (
+            order.state != 'DESPACHADA' ||
+            currentDay != orderDay ||
+            currentMonth != orderMonth ||
+            currentYear != orderYear
+        ) {
+            return false;
+        }
+
+        return true;
+    });
+
     return (
         <>
             <DateTime />
