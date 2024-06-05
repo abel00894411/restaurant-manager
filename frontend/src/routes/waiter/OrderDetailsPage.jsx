@@ -16,7 +16,10 @@ const OrderDetailsPage = () => {
     
     if (!order) {
         return (
-            <>Sin datos para la orden</>
+            <>
+                Sin datos para la orden
+                <Navigate to="/ordenes" />
+            </>
         );
     }
 
