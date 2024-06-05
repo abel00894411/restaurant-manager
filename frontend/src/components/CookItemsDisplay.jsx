@@ -7,9 +7,6 @@ import devLog from '../util/devLog';
 import './CookItemsDisplay.css';
 
 const CookItemsDisplay = () => {
-    // necesita soportar dos casos: cuando la lista ya se obtuvo y cuando todavia no se tiene respuesta de listedOrderItems
-    // Error cuando se actualiza el item en preparacion
-
     const items = jobManager.getAll();
     const [itemsQueue, setItemsQueue] = useState(items);
     const [currentItemInPreparationId, setItemInPreparationId] = useState(items[0]?.id);
