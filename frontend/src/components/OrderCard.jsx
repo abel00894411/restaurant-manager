@@ -1,8 +1,8 @@
 import { menu } from '../models/Menu';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import useEventListener from '../hooks/useEventListener';
 import './OrderCard.css';
-
-// TODO: Add EventListener for updating the card when the order changes
 
 const OrderCard = ({ order }) => {
     const date = order.date;
@@ -16,6 +16,16 @@ const OrderCard = ({ order }) => {
     const fMin = (min < 10) ? `0${min}` : min;
     const fSec = (sec < 10) ? `0${sec}` : sec;
     const amPm = (hour > 11) ? 'p.m.' : 'a.m.';
+
+    const [ triggerUpdate, setTriggerUpdate ] = useState(0);
+
+    useEventListener('updatedOrderItem', (event) => {
+        const { item } = event.detail;
+        if (item.orderId == order.id) {
+            order.setItem(item);
+            setTriggerUpdate(old => old+1);
+        }
+    });
 
     return (
         <Link to={`/ordenes/${order.id}`} className='orderCardLink' >
@@ -47,7 +57,6 @@ const OrderCard = ({ order }) => {
                                 item.state == 'SERVIDO' ? 'var(--primary)'
                             : '';
 
-                                // TODO: different color for each icon
                             return (
                                 <tr key={i}>
                                     <td>{menu.getItem(item.menuItemId).name}</td>
