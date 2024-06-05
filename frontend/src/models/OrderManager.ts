@@ -47,9 +47,8 @@ const topics: ITopic[] = [
 ];
 
 /**
- * The OrderManager manages all tasks, data, events and server connections
- * related to the orders assigned to the waiter user. Currently used as a
- * singleton inside the OrderManagerContext.
+ * Manages tasks, data, events and server connections related to the orders
+ * assigned to the waiter user.
  */
 class OrderManager extends JobManager {
     constructor() {
@@ -152,8 +151,6 @@ class OrderManager extends JobManager {
 
     }
 
-    // Recordar soporte para todos los casos: crear nuevo y actualizar existente
-    // TODO: Testear bien
     set(obj: Order | OrderItem) {
         if (obj instanceof Order) {
 
@@ -175,7 +172,7 @@ class OrderManager extends JobManager {
                     });
                 }
 
-                return true; // Is this right?
+                return true;
 
             } else {
 
@@ -232,7 +229,7 @@ class OrderManager extends JobManager {
                     });
                 }
 
-                return true; // Is this right?
+                return true;
                 
             } else {
 
@@ -259,7 +256,6 @@ class OrderManager extends JobManager {
         }
     }
 
-    // TODO: Testear bien
     get(id: number, type: Function) {
         switch (type) {
             case Order:

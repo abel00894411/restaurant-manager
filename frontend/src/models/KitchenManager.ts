@@ -29,7 +29,7 @@ const topics: ITopic[] = [
 ];
 
 /**
- * Manages all tasks, data, events and server connections related to the order
+ * Manages tasks, data, events and server connections related to the order
  * items assigned to the cook user.
  */
 class KitchenManager extends JobManager {
