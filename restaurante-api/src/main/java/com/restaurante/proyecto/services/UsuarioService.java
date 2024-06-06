@@ -89,7 +89,9 @@ public class UsuarioService {
 				Optional<Cocinero> cocinero = cocineroRepository.findById(Long.valueOf((String)obj[0]));
 				
 				if(cocinero.isPresent()) {
-					respuesta.put("categorias", cocinero.get().getCategorias());
+					respuesta.put("categorias", cocinero.get().getCategorias().stream().map(c->{
+						return c.getIdCategoria();
+					}).collect(Collectors.toList())  );
 				}
 			}
 
