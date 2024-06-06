@@ -18,7 +18,8 @@ public record FacturaResponse (
 		String correo,
 		String direccion,
 		BigDecimal total,
-		Map<String, Object> orden
+		Map<String, Object> orden,
+		String rfc
 		
 		
 		){
@@ -37,6 +38,7 @@ public record FacturaResponse (
 		orden.put("iva", o.getIva());
 		orden.put("total", o.getTotal());
 		orden.put("items", itemsListar);
+		orden.put("idOrden", factura.getOrden().getIdOrden());
 		
 		FacturaResponse facturaResponse = new FacturaResponse(factura.getIdFactura()
 																,factura.getFechaEmision().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
@@ -44,6 +46,7 @@ public record FacturaResponse (
 																,factura.getDireccion()
 																,factura.getTotal()
 																,orden
+																,factura.getRfc()
 																
 				);
 		
