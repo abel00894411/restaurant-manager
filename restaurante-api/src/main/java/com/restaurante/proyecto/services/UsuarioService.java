@@ -86,7 +86,7 @@ public class UsuarioService {
 						.atZone(ZoneId.systemDefault()   )
 						.toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))   .toString()  );
 			
-				Optional<Cocinero> cocinero = cocineroRepository.findById(Long.valueOf((String)obj[0]));
+				Optional<Cocinero> cocinero = cocineroRepository.findById(Long.valueOf(obj[0].toString());
 				
 				if(cocinero.isPresent()) {
 					respuesta.put("categorias", cocinero.get().getCategorias().stream().map(c->{
