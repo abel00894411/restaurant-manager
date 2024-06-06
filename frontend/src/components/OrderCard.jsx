@@ -19,6 +19,8 @@ const OrderCard = ({ order }) => {
 
     const [ triggerUpdate, setTriggerUpdate ] = useState(0);
 
+    // TODO: Add event listener for the addedOrderItems event
+
     useEventListener('updatedOrderItem', (event) => {
         const { item } = event.detail;
         if (item.orderId == order.id) {

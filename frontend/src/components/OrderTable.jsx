@@ -8,8 +8,6 @@ import useEventListener from '../hooks/useEventListener';
 import './OrderTable.css';
 import { useState } from "react";
 
-// TODO: Add EventListener for updating the table when the order changes
-
 const finishItem = (item) => {
     const copy = new OrderItem(item.id, undefined, undefined, 'SERVIDO');
     jobManager.set(copy);
@@ -17,6 +15,8 @@ const finishItem = (item) => {
 
 const OrderTable = ({ order }) => {
     const [itemList, setItemList] = useState(order.getItems());
+
+    // TODO: Add event listener for the addedOrderItems event
 
     useEventListener('updatedOrderItem', (event) => {
         const { item } = event.detail;
