@@ -22,7 +22,7 @@ function Login() {
   const submit = () => {
     fetchAPI('login', 'POST', formData)
       .then(res => {
-        localStorage.setItem('token', res.token);
+        sessionStorage.setItem('token', res.token);
         location.assign('/');
       })
       .catch(error => {

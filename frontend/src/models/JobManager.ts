@@ -14,7 +14,7 @@ abstract class JobManager {
     protected list: Order[] | OrderItem[] = []; // official list of objects the app works with
     #client: Stomp.Client;
     readonly #messageHeaders = {
-        'Authorization': localStorage.getItem('token')
+        'Authorization': sessionStorage.getItem('token')
     }
 
     constructor(topics: ITopic[] = []) {
@@ -30,7 +30,7 @@ abstract class JobManager {
             throw new Error(`Unable to instanciate JobManager, env variable VITE_WEBSOCKET_URL is not set`);
         }
 
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         
         if (!token) {
             throw new Error(`Unable to instanciate JobManager, there's no token`);

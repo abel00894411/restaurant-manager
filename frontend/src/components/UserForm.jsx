@@ -163,7 +163,7 @@ const UserForm = ({ userId, exclude = [], newUser = false, passwordOnly = false 
     }
 
     const logout = () => {
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
         location.assign('/');
     }
 

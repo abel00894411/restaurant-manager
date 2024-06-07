@@ -3,7 +3,7 @@
  */
 const getTokenData = () => {
     try {
-        const encodedToken = localStorage.getItem('token');
+        const encodedToken = sessionStorage.getItem('token');
         const payload = encodedToken.split('.')[1];
         const decodedPayload = atob(payload);
         const tokenData = JSON.parse(decodedPayload);

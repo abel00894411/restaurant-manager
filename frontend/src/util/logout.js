@@ -5,8 +5,8 @@ import devLog from "./devLog";
  * @param { { redirect: boolean | string } } options
  */
 const logout = (options) => {
-    if (localStorage.getItem('token')) {
-        localStorage.removeItem('token');
+    if (sessionStorage.getItem('token')) {
+        sessionStorage.removeItem('token');
         devLog('TOKEN CLEARED');
     }
 

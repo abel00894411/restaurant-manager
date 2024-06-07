@@ -3,7 +3,7 @@
 import devLog from "./devLog";
 
 const base = import.meta.env.VITE_API_URL;
-const token = localStorage.getItem('token');
+const token = sessionStorage.getItem('token');
 
 if (!token) {
     devLog('fetchAPI module has been initialized with no token');
