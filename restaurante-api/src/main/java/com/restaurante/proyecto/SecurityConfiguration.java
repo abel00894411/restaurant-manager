@@ -55,7 +55,7 @@ public class SecurityConfiguration {
 				.addFilterAfter(authFilter, AuthLoginFilter.class).authorizeHttpRequests(request -> {
 					request.requestMatchers("/login").permitAll()
 							.requestMatchers("/prueba").permitAll()
-							.requestMatchers("/obtenerTodosPrueba").permitAll()
+							.requestMatchers("/usuarios/activos").hasAnyRole("ADMINISTRADOR", "MESERO", "COCINERO")
 							.requestMatchers("/app/**").permitAll()
 							.requestMatchers("/topic/**").permitAll()
 							.requestMatchers("/connect/**").permitAll()
