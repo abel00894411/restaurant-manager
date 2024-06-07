@@ -19,10 +19,6 @@ const InvoicePage = () => {
     const [ invoiceData, setInvoiceData ] = useState(undefined);
 
     const handleChange = (event) => {
-        if (invoiceData) {
-            return;
-        }
-
         const input = event.target;
 
         setFormData(oldData => {
@@ -90,14 +86,11 @@ const InvoicePage = () => {
                     <input type="text" name="orderId" onChange={handleChange} autoComplete='off' />
                 </label>
 
-                {
-                    !invoiceData &&
-                    <button type="button" onClick={handleGenerateClick}>Generar factura</button>
-                }
+                <button type="button" onClick={handleGenerateClick}>Generar factura</button>
 
                 { invoiceData &&
                     <>
-                        <h4>Orden #{formData.orderId}</h4>
+                        <h4>Orden #{invoiceData.orden.idOrden}</h4>
 
                         <table className='invoicePage__table'>
                             <thead>
