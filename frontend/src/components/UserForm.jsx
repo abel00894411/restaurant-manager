@@ -39,7 +39,7 @@ const UserForm = ({ userId, exclude = [], newUser = false, passwordOnly = false 
                 .then(res => {
                     setUserData({
                         ...res.usuario,
-                        categorias: [ menu.getAllCategories()[0].categoria ], // TODO: Current categories for cook users should be obtained from the backend
+                        categorias: [ menu.getCategory(res.usuario?.categorias?.[0])?.categoria ],
                         password: '',
                         confirmPassword: ''
                     });
