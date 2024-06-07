@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.restaurante.proyecto.security.filters.AuthSocketInterceptor;
 
-@RestController("/usuarios")
+@RestController()
 @CrossOrigin(originPatterns = "*", allowedHeaders = "*")
 public class ActiveUsersController {
 	
