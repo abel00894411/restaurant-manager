@@ -3,9 +3,15 @@ import RecentActivityBox from '../../components/RecentActivityBox';
 import Count from '../../components/Count';
 import { activityHistory } from '../../models/ActivityHistory';
 import { jobManager } from '../../util/jobManager';
+import fetchAPI from '../../util/fetchAPI';
+import { useState, useEffect } from 'react';
 import './Dashboard.css';
+import devLog from '../../util/devLog';
 
 const Dashboard = () => {
+    const [ activeWaiters, setActiveWaiters ] = useState();
+
+    // TODO: Show counter only after the list of orders has been received, or else it will display zero
     const orders = jobManager.getAll();
     const activeOrders = orders.filter(order => order.state == 'ACTIVA');
     const finishedOrders = orders.filter(order => {
@@ -31,6 +37,17 @@ const Dashboard = () => {
         return true;
     });
 
+    useEffect(() => {
+        fetchAPI('usuarios/activos')
+            .then(res => {
+                const activeWaiters = res.filter(user => user.tipo == 'MESERO');
+                setActiveWaiters(activeWaiters.length);
+            })
+            .catch(error => {
+                devLog(`Unable to get active waiters: ${error.message}`);
+            })
+    }, []);
+
     return (
         <>
             <DateTime />
@@ -51,11 +68,12 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {/* TODO: Make this dynamic */}
-            <div className="waiterDashboard-section shadow">
-                <h3>Meseros activos</h3>
-                <h4>1</h4>
-            </div>
+            { !!activeWaiters &&
+                <div className="waiterDashboard-section shadow">
+                    <h3>Meseros activos</h3>
+                    <h4>{activeWaiters}</h4>
+                </div>
+            }
         </>
     );
 };
