@@ -1,0 +1,11 @@
+.customer-menu {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+}
+
+.customer-menu__logo {
+    width: 120px;
+    height: auto;
+    margin: auto;
+}

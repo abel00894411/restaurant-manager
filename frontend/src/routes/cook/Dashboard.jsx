@@ -1,5 +1,14 @@
+import DateTime from '../../components/DateTime';
+import CookItemsDisplay from '../../components/CookItemsDisplay';
+
 const Dashboard = () => {
-    return <main>Cook dashboard</main>
+
+    return (
+        <>
+            <DateTime />
+            <CookItemsDisplay />
+        </>
+    );
 };
 
 export default Dashboard;

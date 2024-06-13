@@ -1,8 +1,13 @@
+import Menu from "../../components/Menu";
+import './MenuPage.css';
+
 const MenuPage = () => {
     return (
-        <main>
-            Menu Page
-        </main>
+        <>
+            <div className="customer-menu">
+                <Menu />
+            </div>
+        </>
     );
 };
 

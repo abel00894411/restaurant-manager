@@ -1,31 +1,61 @@
-import React from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import fetchAPI from '../../util/fetchAPI';
 import './Login.css'; 
+import devLog from '../../util/devLog';
 
 function Login() {
+  const [formData, setFormData] = useState({ rfc: '', password: '' });
+
+  const handleChange = (event) => {
+    const { target } = event;
+
+    setFormData(oldData => {
+        return {
+            ...oldData,
+            [target.name]: target.value
+        }
+    });
+
+  };
+
+  const submit = () => {
+    fetchAPI('login', 'POST', formData)
+      .then(res => {
+        sessionStorage.setItem('token', res.token);
+        location.assign('/');
+      })
+      .catch(error => {
+        alert('Inicio de sesión incorrecto, vuelve a intentarlo');
+        devLog(error.message);
+      });
+  };
+
   return (
     <div className="login">
       <header className="login-header">
-        <h1>[ LOGO ]</h1>
+        <img src="/img/logo.png" alt="Logotipo" />
       </header>
-      <div>
+      <div className='login-main'>
         <h2>¡Bienvenido a nuestro restaurante!</h2>
         <div className="login-box">
-          <h3>Empleado, inicia sesión</h3>
+          <h4>Empleado, inicia sesión</h4>
           <form>
             <label>
               RFC
-              <input type="text" name="rfc" />
+              <input autoComplete="off" type="text" name="rfc" value={formData.rfc} onChange={handleChange}/>
             </label>
             <label>
               Contraseña
-              <input type="password" name="password" />
+              <input autoComplete="off" type="password" name="password" value={formData.password} onChange={handleChange}/>
             </label>
-            <button type="submit">Continuar</button>
+            <button type="button" onClick={submit}>Continuar</button>
           </form>
         </div>
         <div className="clientes">
-          <a href="/facturas">Genera tus facturas &gt;</a>
-          <a href="/menu">Mira nuestro menú &gt;</a>
+          <h4 className='clientes__titulo'>Clientes</h4>
+          <Link to="/facturas">Genera tus facturas &gt;</Link>
+          <Link to="/menu">Mira nuestro menú &gt;</Link>
         </div>
       </div>
     </div>

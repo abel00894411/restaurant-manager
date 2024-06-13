@@ -1,49 +1,69 @@
 
 .login {
-    text-align: center;
-    font-family: Arial, sans-serif;
-  }
-  
-  .login-header {
-    margin-top: 20px;
-  }
-  
-  .login-box {
-    border: 1px solid #ccc;
-    padding: 20px;
-    display: inline-block;
-    margin-bottom: 20px;
-  }
-  
-  .login-box form {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    height: 100%;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.login-main {
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+    width: 80%;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     align-items: flex-start;
-  }
-  
-  .login-box label {
-    margin-bottom: 10px;
-  }
-  
-  .login-box input {
-    margin-left: 10px;
+}
+
+.login-box label {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    text-align: left;
+}
+
+.login-box input {
+    display: block;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-  
-  .clientes {
-    margin-top: 20px;
-  }
-  
-  .clientes a {
+}
+
+.clientes {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.clientes__titulo {
+    margin-bottom: 16px;
+}
+
+.clientes a {
     display: block;
     margin-bottom: 10px;
     color: green;
     text-decoration: none;
-  }
-  
-  .clientes a:hover {
+}
+
+.clientes a:hover {
     text-decoration: underline;
-  }
-  
+}

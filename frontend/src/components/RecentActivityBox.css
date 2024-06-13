@@ -1,0 +1,25 @@
+.activityHistory {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    width: 100%;
+    padding: 16px 24px;
+    overflow-y: auto;
+}
+
+.activityHistory__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: var(--std-font-size);
+}
+
+.activityHistory__row__text {
+    font-size: inherit;
+}
+
+.activityHistory__row__time {
+    font-size: inherit;
+}

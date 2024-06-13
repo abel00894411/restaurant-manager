@@ -1,0 +1,26 @@
+.waiterDashboard-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    text-align: center;
+}
+
+.waiterDashboard__activityBox-container {
+    width: 80%;
+    margin: auto;
+}
+
+.waiterDashboard__orders {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 16px;
+}
+
+@media screen and (max-width: 900px) {
+    .waiterDashboard__orders {
+        flex-direction: column;
+    }
+}

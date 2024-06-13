@@ -1,0 +1,27 @@
+.userForm {
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+}
+
+.userForm__userType {
+    font-weight: normal;
+}
+
+.userForm__fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.logout-link {
+    width: fit-content;
+    margin: auto;
+}
+
+/* Medium screen size */
+@media screen and (max-width: 450px) {
+    .userForm__fields {
+        grid-template-columns: 1fr;
+    }
+}

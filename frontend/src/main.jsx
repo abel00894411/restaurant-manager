@@ -8,6 +8,7 @@ import * as Admin from './routes/admin/index.jsx';
 import * as Customer from './routes/customer/index.jsx';
 import logout from './util/logout.js';
 import getTokenData from './util/getTokenData.js';
+import { menu } from './models/Menu';
 
 const waiterPaths = [
     {
@@ -31,6 +32,10 @@ const waiterPaths = [
         display: 'Órdenes'
     },
     {
+        path: '/ordenes/:idOrden',
+        element: <Waiter.OrderDetailsPage />
+    },
+    {
         path: '/perfil',
         element: <Waiter.ProfilePage />,
         display: 'Perfil'
@@ -41,12 +46,22 @@ const cookPaths = [
     {
         path: '/',
         element: <Cook.Dashboard />,
-        display: 'Panel'
+        display: 'Cocina'
     },
     {
         path: '/panel',
         element: <Cook.Dashboard />,
-        display: 'Panel'
+        display: 'Cocina'
+    },
+    {
+        path: '/menu',
+        element: <Cook.MenuPage />,
+        display: 'Menú'
+    },
+    {
+        path: '/perfil',
+        element: <Cook.ProfilePage />,
+        display: 'Perfil'
     }
 ];
 
@@ -60,6 +75,36 @@ const adminPaths = [
         path: '/panel',
         element: <Admin.Dashboard />,
         display: 'Panel'
+    },
+    {
+        path: '/usuarios',
+        element: <Admin.UsersPage />,
+        display: 'Usuarios'
+    },
+    {
+        path: '/usuarios/editar/:idUsuario',
+        element: <Admin.EditUserPage />
+    },
+    {   path: '/usuarios/nuevo',
+        element: <Admin.NewUserPage />
+    },
+    {
+        path: '/menu',
+        element: <Admin.MenuPage />,
+        display: 'Menú'
+    },
+    {
+        path: '/menu/editar/:idMenu',
+        element: <Admin.EditMenuPage />
+    },
+    {
+        path: 'menu/nuevo',
+        element: <Admin.NewMenuItemPage />
+    },
+    {
+        path: '/informes',
+        element: <Admin.ReportsPage />,
+        display: 'Informes'
     }
 ];
 
@@ -76,22 +121,24 @@ const customerPaths = [
     },
     {
         path: '/facturas',
-        element: <Customer.Facturas />,
+        element: <Customer.InvoicePage />,
         display: 'Invoice'
     }
 ];
 
 let token = getTokenData();
+const userType = token?.tipo;
 
 // Choose the correct path list for the type of user logged-in
 let paths = (
-    token?.tipo == 'MESERO' ? waiterPaths
-    : token?.tipo == 'COCINERO' ? cookPaths
-    : token?.tipo == 'ADMINISTRADOR' ? adminPaths
+    userType == 'MESERO' ? waiterPaths
+    : userType == 'COCINERO' ? cookPaths
+    : userType == 'ADMINISTRADOR' ? adminPaths
     : undefined
 );
 
 if (!paths) {
+    console.log(token.tipo);
     logout({ redirect: false });
     token = getTokenData();
     paths = customerPaths
@@ -106,8 +153,11 @@ const router = createBrowserRouter([
     }
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-        <RouterProvider router={router} />
-    </React.StrictMode>,
-)
+// Initiate menu before starting app
+menu.onReady = () => {
+    ReactDOM.createRoot(document.getElementById('root')).render(
+        <React.StrictMode>
+            <RouterProvider router={router} />
+        </React.StrictMode>,
+    );
+}

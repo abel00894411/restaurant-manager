@@ -1,5 +1,11 @@
+import Menu from '../../components/Menu';
+
 const MenuPage = () => {
-    return <main>Menu Page</main>
+    return (
+        <>
+            <Menu />            
+        </>
+    );
 };
 
 export default MenuPage;

@@ -1,0 +1,18 @@
+.menuItemForm {
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+}
+
+.menuItemForm__fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Medium screen size */
+@media screen and (max-width: 450px) {
+    .menuItemForm__fields {
+        grid-template-columns: 1fr;
+    }
+}
