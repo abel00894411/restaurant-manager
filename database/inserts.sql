@@ -1,15 +1,8 @@
+-- This is a script to populate the database with example data
+
 USE restaurante_analisis;
 
-							         -- EMPLEADOS
--- administrador (id: 1)
-INSERT INTO empleados(idEmpleado, nombre, apellido, `password`, rfc, sueldo, fechaContratacion)
-VALUES(  1,
-		'Carlos',
-        'Ramirez Perez',
-        '$2a$12$tkffTXR8k.tbHw2nDzB6S.Sm8QL2IXIhoRh9NqTAITocZKF7y7n7i',
-        'RZPP750304HGT',
-        8800.00,
-        '2020-11-05');
+-- EMPLEADOS
         
 -- mesero (id: 2)
 INSERT INTO empleados(idEmpleado,nombre, apellido, `password`, rfc, sueldo, fechaContratacion)

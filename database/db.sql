@@ -1,4 +1,5 @@
 CREATE DATABASE restaurante_analisis;
+USE restaurante_analisis;
 
 CREATE TABLE `restaurante_analisis`.`empleados` (
   `idEmpleado` INT NOT NULL AUTO_INCREMENT,
@@ -175,7 +176,13 @@ END;
 DELIMITER ;
 
 
-
-
-
+-- Create admin user (id: 1)
+INSERT INTO empleados(idEmpleado, nombre, apellido, `password`, rfc, sueldo, fechaContratacion)
+VALUES(  1,
+		'ADMIN',
+        'ADMIN',
+        '$2a$12$oxy1eJooFCKMDu.hjAQOp.Qvrqscio2ZZj9ofXwK2p1NI6gQEwNRm',
+        'admin',
+        0.00,
+        CURDATE());
 
