@@ -185,4 +185,5 @@ VALUES(  1,
         'admin',
         0.00,
         CURDATE());
-
+        
+INSERT INTO administradores(idAdministrador) VALUES (1);
