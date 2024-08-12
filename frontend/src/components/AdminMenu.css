@@ -14,11 +14,19 @@
 .adminMenu__category__title-container {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 32px;
 }
 
 .adminMenu__category__title-container__title {
     width: fit-content;
+    height: fit-content;
+}
+
+.adminMenu__category__title-container__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
 }
 
 .adminMenu__category__item {
