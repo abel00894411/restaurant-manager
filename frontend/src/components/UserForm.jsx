@@ -57,7 +57,7 @@ const UserForm = ({ userId, exclude = [], newUser = false, passwordOnly = false 
                 rfc: '',
                 sueldo: '',
                 puesto: userTypes[0],
-                categorias: [ menu.getAllCategories()[0].categoria ],
+                categorias: [ menu.getAllCategories()?.[0]?.categoria ],
                 password: '',
                 confirmPassword: ''
             })

@@ -15,7 +15,6 @@ const editCategoryName = (categoryId) => {
 
     fetchAPI(`categoria/${categoryId}`, 'PUT', { categoria: newName })
         .then(res => {
-            alert('Categoría renombrada con éxito');
             location.reload();
         })
         .catch(error => {
@@ -24,10 +23,31 @@ const editCategoryName = (categoryId) => {
         });
 };
 
+const deleteCategory = (categoryId) => {
+    const confirmation = confirm('¿Desea eliminar la categoría? Esto eliminará todos sus ítems');
+
+    if (!confirmation) {
+        return;
+    }
+
+    fetchAPI(`categoria/${categoryId}`, 'DELETE')
+        .then(res => {
+            location.reload();
+        })
+        .catch(error => {
+            alert('No fue posible eliminar la categoría');
+        });
+};
+
 const deleteItem = (itemId) => {
+    const confirmation = confirm('¿Desea eliminar el ítem?');
+
+    if (!confirmation) {
+        return;
+    }
+
     fetchAPI(`menu/${itemId}`, 'DELETE')
         .then(res => {
-            alert('Ítem eliminado con éxito');
             location.reload();
         })
         .catch(error => {
@@ -40,46 +60,51 @@ const AdminMenu = () => {
     const categories = menu.getAllCategories();
     const items = menu.getAllItems();
 
-    if (items.length == 0) {
-        return <>Sin datos que mostrar</>;
+    if (categories.length == 0) {
+        return <>Agrega categorías para poder llenar el menú</>;
     }
 
     return (
         <div className="adminMenu">
             { categories.map((category, i) => {
 
+                const categoryItems = items.filter(item => item.category == category.categoria);
+
                 return (
                     <div className="adminMenu__category" key={i}>
                         <div className="adminMenu__category__title-container">
                             <h4 className="adminMenu__category__title-container__title">{category.categoria}</h4>
                             <div className="adminMenu__category__title-container__buttons">
-                                <TinyButton icon={'edit'} onClick={()=>editCategoryName(category.idCategoria)}/>
+                                <TinyButton icon='edit' onClick={()=>editCategoryName(category.idCategoria)} />
+                                <TinyButton icon='delete' onClick={()=>deleteCategory(category.idCategoria)} />
                             </div>
                         </div>
 
-                        { items.map((item, i) => {
-                            
-                            return (
-                                item.category == category.categoria &&
-                                <div className="adminMenu__category__item" key={i}>
-                                    <div className="adminMenu__category__item__details shadow rounded-border">
-                                        <img src={`data:image/jpeg;base64,${item.image}`} />
-                                        <p className="adminMenu__category__item__details__name">{item.name}</p>
-                                        <p className="adminMenu__category__item__details__price">{currencyFormatter.format(item.price)}</p>
-                                    </div>
+                        { categoryItems.length == 0 ? 
+                            <>La categoría está vacía</>
+                            : 
+                            categoryItems.map((item, i) => {
+                                return (
+                                    <div className="adminMenu__category__item" key={i}>
+                                        <div className="adminMenu__category__item__details shadow rounded-porder">
+                                            <img src={`data:image/jpeg;base64,${item.image}`} />
+                                            <p className="adminMenu__category__item__details__name">{item.name}</p>
+                                            <p className="adminMenu__category__item__details__price">{currencyFormatter.format(item.price)}</p>
+                                        </div>
 
-                                    <div className="adminMenu__category__item__description">
-                                        <p className="adminMenu__category__item__description__title" >Descripción</p>
-                                        <p className="adminMenu__category__item__description__content">{item.description}</p>
-                                    </div>
+                                        <div className="adminMenu__category__item__description">
+                                            <p className="adminMenu__category__item__description__title" >Descripción</p>
+                                            <p className="adminMenu__category__item__description__content">{item.description}</p>
+                                        </div>
 
-                                    <div className="adminMenu__category__item__buttons">
-                                        <TinyButton icon="edit" redirect={`/menu/editar/${item.id}`} />
-                                        <TinyButton icon="delete" onClick={() => deleteItem(item.id)} />
-                                    </div>
-                                </div>  
-                            );
-                        }) }
+                                        <div className="adminMenu__category__item__buttons">
+                                            <TinyButton icon="edit" redirect={`/menu/editar/${item.id}`} />
+                                            <TinyButton icon="delete" onClick={() => deleteItem(item.id)} />
+                                        </div>
+                                    </div>  
+                                );
+                            }) 
+                        }
 
                     </div>
                 );

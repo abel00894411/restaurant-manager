@@ -17,7 +17,7 @@ const MenuItemForm = ({ menuItemId, newMenuItem = false }) => {
         name: '',
         price: '',
         description: '',
-        categoryId: menu.getAllCategories()[0].idCategoria,
+        categoryId: menu.getAllCategories()?.[0]?.idCategoria,
         image: ''
     };
 
@@ -140,7 +140,7 @@ const MenuItemForm = ({ menuItemId, newMenuItem = false }) => {
 
             </div>
 
-            <button type='button' onClick={submit}>{ newMenuItem ? 'Crear usuario' : 'Guardar cambios' }</button>
+            <button type='button' onClick={submit}>{ newMenuItem ? 'Crear ítem' : 'Guardar cambios' }</button>
 
         </form>
     );
