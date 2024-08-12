@@ -24,7 +24,7 @@ const onAddButtonClick = (menuItemId, setTriggerUpdate) => {
 }
 
 const Menu = () => {
-    const [currentCategory, setCurrentCategory] = useState(menu.getAllCategories()[0].categoria);
+    const [currentCategory, setCurrentCategory] = useState(menu.getAllCategories()?.[0]?.categoria);
     const [triggerUpdate, setTriggerUpdate] = useState(0); // TEMPORAL FIX
 
     const formatCategoryName = (category) => {
@@ -34,6 +34,11 @@ const Menu = () => {
     }
 
     return (
+        (menu.getAllCategories().length == 0) ?
+        <>
+            <h1>El menú está vacío</h1>
+        </>
+        :
         <>
             <div className='menu'>
                 <h4 className='menu__category-title'>{formatCategoryName(currentCategory)}</h4>
