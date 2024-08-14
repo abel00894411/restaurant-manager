@@ -1,6 +1,5 @@
 package com.restaurante.proyecto.models.entity;
 
-import java.util.List;
 
 public class User {
 

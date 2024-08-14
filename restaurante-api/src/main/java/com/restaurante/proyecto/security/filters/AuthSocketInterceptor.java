@@ -1,17 +1,11 @@
 package com.restaurante.proyecto.security.filters;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +13,6 @@ import com.restaurante.proyecto.models.entity.User;
 import com.restaurante.proyecto.security.filters.strategiesRequest.IStrategy;
 import com.restaurante.proyecto.services.JwtService;
 
-import io.jsonwebtoken.Jwts;
 
 @Component
 public class AuthSocketInterceptor implements ChannelInterceptor{

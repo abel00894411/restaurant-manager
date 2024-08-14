@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.springframework.http.ResponseEntity;
 
 public final class ImageHelper {
 
@@ -29,7 +28,7 @@ public final class ImageHelper {
 
 	/**
 	 * 
-	 * @param fil El nobre del archivo
+	 * @param fil El nombre del archivo
 	 * @param path La ruta donde se encuentra el archivo 
 	 * @return
 	 */
@@ -46,13 +45,12 @@ public final class ImageHelper {
 				bos.write(buf, 0, bytesRead);
 			}
 			byte[] bytes = bos.toByteArray();
-			System.out.println("Imagen convertida a arreglo de bytes con éxito.");
 			fis.close();
 			bos.close();
 			return bytes;
 		} catch (IOException e) {
-			System.out.println("\n" + e.getMessage());
-			throw new RuntimeException("No se ha podido convertir la imagen");
+			
+			return new byte[0];
 		}
 	}
 
