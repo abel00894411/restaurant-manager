@@ -1,12 +1,9 @@
 package com.restaurante.proyecto.dtos;
 
 import java.math.BigDecimal;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+
 import java.util.List;
 
-import com.restaurante.proyecto.models.entity.ItemOrden;
-import com.restaurante.proyecto.models.entity.Orden;
 
 public class OrdenDTO {
 

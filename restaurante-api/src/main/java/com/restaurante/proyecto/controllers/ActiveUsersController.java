@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.restaurante.proyecto.models.entity.Empleado;
 import com.restaurante.proyecto.security.filters.AuthSocketInterceptor;
 import com.restaurante.proyecto.services.UsuarioService;
 

@@ -1,24 +1,15 @@
 package com.restaurante.proyecto.security.filters;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.restaurante.proyecto.errors.UnauthorizedException;
-import com.restaurante.proyecto.models.entity.Empleado;
 import com.restaurante.proyecto.repositories.IEmpleadoRepository;
 import com.restaurante.proyecto.services.JwtService;
 import com.restaurante.proyecto.services.UserDetailsServiceImpl;
