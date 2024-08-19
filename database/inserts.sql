@@ -64,8 +64,6 @@ VALUES(  7,
         4500.00,
         '2021-02-25');
 
-							         -- ADMINISTRADORES
-INSERT INTO administradores(idAdministrador) VALUES (1);
 							         -- MESEROS
 INSERT INTO meseros(idMesero) VALUES (2);
 							         -- MESEROS
