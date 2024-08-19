@@ -1,0 +1,1560 @@
+<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                padding: 24px;
+            }
+
+            h2 {
+                margin: 36px auto 28px auto;
+            }
+
+            h3 {
+                margin: 32px auto 24px auto;
+            }
+
+            li {
+                list-style-type: none;
+            }
+
+            li:before {
+                content: "- ";
+            }
+
+            table {
+                border-collapse: collapse;
+            }
+            
+            thead {
+                text-align: center;
+            }
+
+            td, th {
+                border: 1px solid black;
+                padding: 12px 16px;
+            }
+            
+            pre {
+                font-family: monospace;
+                font-size: 16px;
+            }
+
+            .section {
+                margin: 64px auto;
+            }
+
+            .section.database-section thead {
+                background-color: #ccc;
+            }
+
+            .section.rest-api-section thead {
+                background-color: #d9ead3;
+            }
+
+            .section.section.rest-api-section tbody tr td:nth-child(1) {
+                width: fit-content;
+                text-align: center;
+            }
+
+            .section.section.rest-api-section tbody tr td:nth-child(2) {
+                width: fit-content;
+                font-family: monospace;
+                font-size: 16px;
+                white-space: nowrap;
+            }
+
+            .section.rest-api-section tbody tr td:nth-last-child(2) {
+                text-align: center;
+            }
+
+            .section.rest-api-section tbody tr td:last-child {
+                min-width: 320px;
+                max-width: 320px;
+                text-align: justify;
+            }
+
+            .section.section.websocket-section table {
+                font-family: monospace;
+                font-size: 16px;
+            }
+
+            .section.websocket-section thead {
+                background-color: #c9daf8;
+            }
+
+            .section.websocket-section tbody tr td:nth-child(2) {
+                max-width: 320px;
+                min-width: 320px;
+            }
+
+            .section.websocket-section tbody tr td:nth-last-child(2) {
+                text-align: center;
+            }
+
+            .section.websocket-section tbody tr td:last-child {
+                max-width: 320px;
+                min-width: 320px;
+            }
+
+            #img-db {
+                display: block;
+                margin: auto;
+                width: 896px;
+                height: auto;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Documentación de la API de Restaurant Manager</h1>
+
+        <div class="section database-section">
+
+            <h2>Diagrama físico</h2>
+            
+            <img id="img-db" src="database-model.png"/>
+            
+            <h2>Triggers</h2>
+    
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tabla</th>
+                        <th>Acción</th>
+                        <th>Trigger</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>ItemsOrden</td>
+                    <td>AFTER INSERT</td>
+                    <td>actualizar_itemsOrden_insert</td>
+                    <td>Actualiza automáticamente el subtotal, IVA y total de la orden correspondiente en la tabla Ordenes.</td>
+                </tr>
+            </table>
+            
+        </div>
+        
+        <div class="section token-section">
+            <h2>Forma del JWT</h2>
+    
+            <pre>
+{
+    "idUsuario": number,
+    "tipo": "MESERO" | "COCINERO" | "ADMINISTRADOR",
+    "sub": number,
+    "iat": string,
+    "exp": string
+}
+            </pre>
+        </div>
+        
+        <div class="section rest-api-section">
+
+            <h1>API REST</h1>
+
+            <h2>Inicio de sesión</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Método</td>
+                        <td>Ruta</td>
+                        <td>Parámetros</td>
+                        <td>Respuesta </td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>POST</td>
+                        <td>/login</td>
+                        <td>
+                            <pre>
+{
+    rfc: string,
+    password: string
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <pre>
+200 (OK)
+{
+    "mensaje": "Sesión iniciada con éxito",
+    "idUsuario": number, 
+    "token": string
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+}
+        
+                            </pre>
+                        </td>
+                        <td>PÚBLICO</td>
+                        <td></td>
+                    </tr>
+            </table>
+
+            <h3>Rutas Usuario</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Método</td>
+                        <td>Ruta</td>
+                        <td>Parámetros</td>
+                        <td>Respuesta </td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>GET</td>
+                        <td>/usuarios</td>
+                        <td></td>
+                        <td>
+                            <pre>
+200 (OK)
+{
+    "usuarios": [
+        {
+            "id": number,
+            "nombre": string,
+            "apellido": string,
+            "rfc": string,
+            "sueldo": number,
+            "puesto" : "MESERO" | "COCINERO" | "ADMINISTRADOR",
+            "fechaContratacion": string
+        },
+        ...
+    ] 
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/usuarios</td>
+                        <td>
+                            <pre>
+{
+    "nombre": string,
+    "apellido": string,
+    "rfc": string,
+    "sueldo": number,
+    "rol": "MESERO" | "ADMINISTRADOR" | "COCINERO",
+    "categorias"?: string[]
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <pre>
+201 (CREATED)
+{
+    "password": string,
+    "idUsuario": number
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/usuario/:id</td>
+                        <td></td>
+                        <td>
+                            <pre>
+200 (OK)
+{
+    "usuario": {
+        "id": number,
+        "nombre": string,
+        "apellido": string,
+        "puesto": "MESERO" | "COCINERO" | "ADMINISTRADOR",
+        "rfc": string,
+        "sueldo": number,
+        "fechaContratacion": string,
+        "categorias": number[]
+    }
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+},
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR<br>MESERO<br>COCINERO<br></td>
+                        <td>
+                            <p>Usuarios con rol MESERO o COCINERO solo pueden consultar sus propios datos.</p>
+                            <p>Un admin puede consultar cualquier usuario.</p>
+                            <p>La propiedad categorias se incluye solo en usuarios cocineros.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>PUT</td>
+                        <td>/usuario/:id</td>
+                        <td>
+                            <pre>
+{
+    "nombre": string,
+    "apellido": string,
+    "rfc": string,
+    "sueldo": number,
+    "categorias"?: string[]
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <pre>
+204  (NO CONTENT)
+{
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+},
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>PATCH</td>
+                        <td>/usuario/:id</td>
+                        <td>
+                            <pre>
+{
+    "password": string
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <pre>
+204 (OK)
+{
+
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Sin credenciales válidas"
+}
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR<br>MESERO<br>COCINERO</td>
+                        <td>Los usuarios solo pueden actualizar su propia contraseña.</td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td>/usuario/:id</td>
+                        <td></td>
+                        <td>
+                            <pre>
+204 (NO CONTENT)
+{
+    
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Sin credenciales válidas"
+}
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td>Un usuario no puede eliminarse a sí mismo.</td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/usuarios/activos</td>
+                        <td></td>
+                        <td>
+                            <pre>
+200 (OK)
+[
+    {
+        "id": number,
+        "tipo": string
+    },
+    ...
+]
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR<br>MESERO<br>COCINERO</td>
+                        <td></td>
+                    </tr>
+            </table>
+
+            <h3>Rutas Menú</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Método</td>
+                        <td>Ruta</td>
+                        <td>Parámetros</td>
+                        <td>Respuesta </td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>GET</td>
+                        <td>/menu</td>
+                        <td></td>
+                        <td>
+                            <pre>
+200 (OK)
+{
+    "itemsMenu": [
+        {
+            "idItemMenu": number,
+            "producto": string,
+            "precio" : number,
+            "descripcion": string,
+            "categoria": number,
+            "imagen": string (Arreglo de bytes en Base64, JPEG)
+        },
+        ...
+    ] 
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+}
+                            </pre>
+                        </td>
+                        <td>
+                            PÚBLICO</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/menu</td>
+                        <td>
+                            <pre>
+{
+    "producto": string,
+    "precio": number,
+    "descripcion": string,
+    "idCategoria": number,
+    "imagen": string (ArrayBuffer en Base64, JPEG)
+}
+                            </pre>    
+                        </td>
+                        <td>
+                            <pre>
+201 (CREATED)
+{
+    "itemMenu": {
+        "idItemMenu": number,
+        "producto": string,
+        "precio": number,
+        "descripcion": string
+        "categoria": number,
+        "imagen": string (Arreglo de bytes en Base64, JPEG)
+    }
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+}
+
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>PUT</td>
+                        <td>/menu/:id</td>
+                        <td>
+                            <pre>
+{
+    "producto": string,
+    "precio": number,
+    "descripcion": string,
+    "idCategoria": number
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <pre>
+204 (OK)
+{
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+}
+
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td>/menu/:id</td>
+                        <td></td>
+                        <td>
+                            <pre>
+204 (NO CONTENT)
+{
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Sin credenciales válidas"
+}
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+
+500 (INTERNAL SERVER ERROR) {
+    "mensaje": "Error al momento de eliminar"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+            </table>
+            
+            <h3>Rutas Categoría</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Método</td>
+                        <td>Ruta</td>
+                        <td>Parámetros</td>
+                        <td>Respuesta </td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>GET</td>
+                        <td>/categorias</td>
+                        <td></td>
+                        <td>
+                            <pre>
+200 (OK)
+{
+    "categorias":[
+        {
+            "id": number,
+            "categoria": string
+        },
+        ...
+    ] 
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+                            </pre>
+                        </td>
+                        <td>PÚBLICO</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/categorias</td>
+                        <td>
+                            <pre>
+{
+    "categoria": string
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <pre>
+201 (CREATED)
+{
+    "categoria": {
+        "id": number,
+        "categoria": string
+    }
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+}
+
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>PUT</td>
+                        <td>/categoria/:id</td>
+                        <td>
+                            <pre>
+{
+    "categoria": string
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <pre>
+204 (NO CONTENT)
+{
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+}
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td>/categoria/:id</td>
+                        <td></td>
+                        <td>
+                            <pre>
+204 (NO CONTENT)
+{
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Sin credenciales válidas"
+}
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+
+500 (INTERNAL SERVER ERROR) {
+    "mensaje": "Error al momento de eliminar"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+            </table>
+            
+            <h3>Rutas Orden</h3>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <td>Método</td>
+                        <td>Ruta</td>
+                        <td>Parámetros</td>
+                        <td>Respuesta </td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                        <tbody></tbody>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>GET</td>
+                        <td>
+                            /ordenes
+                            <br><br>
+                            Queries:
+                            <br><br>
+                            dateMin=dd-mm-aaaa
+                            <br>
+                            dateMax=dd-mm-aaaa
+                        </td>
+                        <td></td>
+                        <td>
+                            <pre>
+200 (OK)
+{
+    "ordenes": [
+        {
+            "id": number,
+            "idMesero": number,
+            "mesero": string,
+            "fecha": string,
+            "estado": "ACTIVA" | "DESPACHADA",
+            "subtotal": number,
+            "iva": number,
+            "total": number,
+            "items": [
+                {
+                    "id": number,
+                    "idItemMenu": number,
+                    "idCocinero": number,
+                    "producto": string,
+                    "cantidad" : number,
+                    "costo": number,
+                    "estado": "PENDIENTE" | "PREPARADO" | "SERVIDO"
+
+                },
+                ...
+            ],
+        },
+        ...
+    ] 
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td>Si no se especifica dateMin y dateMax, devuelve exclusivamente los elementos con la fecha actual</td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/orden/:id</td>
+                        <td></td>
+                        <td>
+                            <pre>
+200 (OK)
+{
+    "orden": {
+        "id": number,
+        "idMesero": number,
+        "mesero": string,
+        "fecha": string,
+        "estado": "ACTIVA" | "DESPACHADA",
+        "subtotal": number,
+        "iva": number,
+        "total": number,
+        "items": [
+            {
+                "id": number,
+                "idItemMenu": number,
+                "idCocinero": number,
+                "producto": string,
+                "cantidad": number,
+                "costo": number,
+                "estado": "PENDIENTE" | "PREPARADO" | "SERVIDO"
+            },
+            ...
+        ]
+    }                 
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td>/orden/:id</td>
+                        <td></td>
+                        <td>
+                            <pre>
+204 (NO CONTENT)
+{
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+},
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+            </table>
+            
+            <h3>Rutas Factura</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Método</td>
+                        <td>Ruta</td>
+                        <td>Parámetros</td>
+                        <td>Respuesta </td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>GET</td>
+                        <td>
+                            /facturas
+                            <br><br>
+                            Queries:
+                            <br><br>
+                            correo=mail@example.com
+                        </td>
+                        <td></td>
+                        <td>
+                            <pre>
+200 (OK)
+{
+    "facturas": [
+        {
+            "id": number,
+            "idOrden": number,
+            "fechaEmision": string,
+            "correo": string,
+            "direccion": string,
+            "total": double,
+            "rfc": string
+        },
+        ...
+    ]
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+},
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ANY</td>
+                        <td>Si no se especifica correo, se devuelven todas las facturas existentes, solo un ADMINISTRADOR puede recibir una respuesta así.</td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/facturas</td>
+                        <td>
+                            <pre>
+{
+    "idOrden": number,
+    "correo": string,
+    "direccion": string,
+    "rfc": string
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <pre>
+201 (CREATED)
+{
+    "mensaje": "Factura creada con éxito",
+    "factura": {
+        "id": number,
+        "fechaEmision": string,
+        "correo": string,
+        "direccion": string,
+        "total": double,
+        "rfc": string,
+        "orden": {
+            "idOrden": number,
+            "mesero": string,
+            "fecha": string,
+            "subtotal": number,
+            "iva": number,
+            "total": number,
+            "items": [
+                {
+                    "id": number,
+                    "idItemMenu": number,
+                    "idCocinero": number,
+                    "producto": string,
+                    "cantidad": number,
+                    "costo": number,
+                    "estado": "PENDIENTE" | "PREPARADO" | "SERVIDO"
+                },
+                ...
+            ],
+        }
+    }
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+},
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ANY</td>
+                        <td>Solo será posible crear facturas de ordenes despachadas.</td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td>/factura/:id</td>
+                        <td></td>
+                        <td>
+                            <pre>
+204 (NO CONTENT)
+{
+}
+
+400 (BAD REQUEST)
+{
+    "mensaje": "Petición incorrecta"
+}
+
+401 (UNAUTHORIZED)
+{
+    "mensaje": "Credenciales de acceso incorrectas"
+},
+
+403 (FORBIDDEN)
+{
+    "mensaje": "Sin permiso"
+}
+                            </pre>
+                        </td>
+                        <td>ADMINISTRADOR</td>
+                        <td></td>
+                    </tr>
+            </table>
+        
+        </div>
+
+        <div class="section websocket-section">
+
+            <h2>WebSockets</h2>
+            
+            /connect
+
+            <h3>Consideraciones</h3>
+
+            Al recibir un mensaje, ejecutar el evento solo si se cumple el requisito establecido.<br>
+            El servidor lleva seguimiento de los meseros y cocineros con una conexión activa.
+            
+            <h2>De cliente a servidor:</h2>
+            
+            El cliente deberá incluir el header:<br>
+            Authorization: Bearer JWT
+            
+            <h3>Destino "app/ordenes/nueva"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en servidor</td>
+                        <td>Requisito</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "items": [
+        {
+            "idItemMenu": number,
+            "cantidad": number
+        },
+        ...
+    ]
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <p>Asignar la orden a un mesero.</p>
+                            <p>Asignar los ítems a los cocineros.</p>
+                            <p>Enviar al remitente un mensaje por "topic/ordenes/creadas/{id}".</p>
+                            <p>Enviar al mesero al que se le asignó la orden un mensaje por "topic/ordenes/asignados/{id}" con los datos de la orden.</p>
+                            <p>Enviar a los cocineros a los que se les asignaron ítems un mensaje por "topic/items/asignados/{id}" con los datos de los ítems asignados.</p>
+                        </td>
+                        <td>Rol MESERO</td>
+                        <td>Una nueva orden se crea con estado "ACTIVO".</td>
+                    </tr>
+            </table>
+
+            <h3>Destino "app/ordenes/enlistar"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en servidor</td>
+                        <td>Requisito</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>Sin cuerpo</td>
+                        <td>Enviar al remitente un mensaje por "topic/ordenes/listados/{id}". Incluyendo los datos de todas las ordenes que tiene asignados en la fecha actual.</td>
+                        <td>Rol MESERO</td>
+                        <td>También enviar ordenes despachadas, para que pueda generar los tickets de dichas ordenes.</td>
+                    </tr>
+                </thead>
+            </table>
+
+            <h3>Destino "app/ordenes/llenar"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en servidor</td>
+                        <td>Requisito</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "idOrden": number,
+    "items": [
+        {
+            "idItemMenu": number,
+            "cantidad": number
+        },
+        ...
+    ]
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <p>Si la orden especificada está activa, agregarle los ítems.</p>
+                            <p>Asignar los ítems a los cocineros.</p>
+                            <p>Enviar al remitente un mensaje por "topic/items/agregados/{id}" con los datos de los ítems agregados.</p>
+                            <p>Enviar a los cocineros a los que se les asignaron ítems un mensaje por "topic/items/asignados/{id}" con los datos de los ítems asignados.</p>
+                        </td>
+                        <td>
+                            Rol MESERO
+                            <br><br>
+                            El remitente debe ser el mesero al que se le asignó la orden especificada
+                        </td>
+                        <td></td>
+                    </tr>
+            </table>
+
+            <h3>Destino "app/ordenes/terminar"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en servidor</td>
+                        <td>Requisito</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "idOrden": number,
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <p>Si la orden especificada está activa y todos sus ítems han sido servidos, cambiar su estado a "DESPACHADA".</p>
+                            <p>Enviar al remitente un mensaje por "topic/ordenes/terminadas/{id}", con el id de la orden terminada.</p>
+                        </td>
+                        <td>
+                            Rol MESERO
+                            <br><br>
+                            El remitente debe ser el mesero al que se le asignó la orden especificada
+                        </td>
+                        <td></td>
+                    </tr>
+            </table>
+
+            <h3>Destino "app/items/enlistar"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en servidor</td>
+                        <td>Requisito</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>Sin cuerpo</td>
+                        <td>Enviar al remitente un mensaje por "topic/items/listados/{id}". Incluyendo los datos de todos los items en estado "PENDIENTE" que tiene asignados en la fecha actual.</td>
+                        <td>Rol COCINERO</td>
+                        <td></td>
+                    </tr>
+            </table>
+
+            <h3>Destino "app/items/actualizar"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en servidor</td>
+                        <td>Requisito</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "idItemOrden": number,
+    "estado": string
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <p>Cambiar el estado del ítem especificado.</p>
+                            <p>Enviar un mensaje por "topic/items/actualizaciones" al mesero y cocinero responsables del ítem.</p>
+                        </td>
+                        <td>Rol MESERO o COCINERO</td>
+                        <td></td>
+                    </tr>
+            </table>
+
+            <h2>De servidor a cliente:</h2>
+            <h3>Destino "topic/ordenes/creadas/{ID}"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en cliente</td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "idMesero": number,
+    "mesero": string
+}
+                            </pre>
+                        </td>
+                        <td>Mostrar una alerta mencionando a qué mesero se le asignó la orden creada.</td>
+                        <td>MESERO</td>
+                        <td>Los datos son del mesero a quien le fue asignada la orden.</td>
+                    </tr>
+            </table>
+
+            <h3>Destino "topic/ordenes/asignados/{id}"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en cliente</td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "orden": {
+        "idOrden": number,
+        "fecha": string,
+        "subtotal": number,
+        "estado": string,
+        "items": [
+            {
+                "idItemOrden": number,
+                "idItemMenu": number,
+                "idCocinero": number,
+                "cantidad": number,
+                "costo": number,
+                "estado": string
+            },
+            ...
+        ]
+    }
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <p>Añadir la orden al listado de ordenes activas en la interfaz de usuario.</p>
+                            <p>Mostrar una alerta indicando al usuario que se le ha asignado una nueva orden.</p>
+                        </td>
+                        <td>MESERO</td>
+                        <td></td>
+                    </tr>
+            </table>
+
+            <h3>Destino "topic/ordenes/listados/{id}"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en cliente</td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "ordenes": [
+        {
+            "idOrden": number,
+            "fecha": string,
+            "subtotal": number,
+            "iva": number (opcional),
+            "total": number (opcional),
+            "estado": string,
+            "items": [
+                {
+                    "idItemOrden": number,
+                    "idItemMenu": number,
+                    "idCocinero": number,
+                    "cantidad": number,
+                    "suma": number,
+                    "estado": string
+                },
+                ...
+            ]
+        },
+        ...
+    ]
+}
+                            </pre>
+                        </td>
+                        <td>Generar el listado de ordenes en la interfaz de usuario.</td>
+                        <td>MESERO</td>
+                        <td>Incluir "iva" y "total" solo para ordenes despachadas.</td>
+                    </tr>
+            </table>
+
+            <h3>Destino "topic/ordenes/terminadas/{id}"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en cliente</td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "idOrden": number,
+    "subtotal": number,
+    "iva": number,
+    "total": number
+}
+                            </pre>
+                        </td>
+                        <td>Marcar la orden especificada como despachada en la interfaz de usuario.</td>
+                        <td>MESERO</td>
+                        <td></td>
+                    </tr>
+            </table>
+
+            <h3>Destino "topic/items/listados/{id}"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en cliente</td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                        <tbody></tbody>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "items": [
+        {
+            "idItemOrden": number,
+            "idItemMenu": number,
+            "cantidad": number,
+            "estado": string,
+            "fecha": string
+        },
+        ...
+    ]
+}
+                            </pre>
+                        </td>
+                        <td>Generar el listado de ítems en la interfaz de usuario.</td>
+                        <td>COCINERO</td>
+                        <td></td>
+                    </tr>
+            </table>
+
+            <h3>Destino "topic/items/agregados/{id}"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en cliente</td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "idOrden": number,
+    "items": [
+        {
+            "idItemOrden": number,
+            "idItemMenu": number,
+            "idCocinero": number,
+            "cantidad": number,
+            "costo": number,
+            "estado": string
+        },
+        ...
+    ]
+}
+                            </pre>
+                        </td>
+                        <td>Agregar los nuevos ítems a la orden en la interfaz de usuario.</td>
+                        <td>MESERO</td>
+                        <td></td>
+                    </tr>
+            </table>
+
+            <h3>Destino "topic/items/asignados/{id}"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en cliente</td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "items": {
+        "idItemOrden": number,
+        "idItemMenu": number,
+        "cantidad": number,
+        "estado": string,
+        "fecha": string
+    }
+}
+                            </pre>
+                        </td>
+                        <td>
+                            <p>Agregar los nuevos ítems a la interfaz de usuario.</p>
+                            <p>Mostrar una alerta indicando al usuario que se le han asignado nuevos ítems.</p>
+                        </td>
+                        <td>COCINERO</td>
+                        <td></td>
+                    </tr>
+            </table>
+
+            <h3>Destino "topic/items/actualizaciones/{id}"</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Evento en cliente</td>
+                        <td>Rol</td>
+                        <td>Notas</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>
+                            <pre>
+{
+    "idOrden": number,
+    "idItemOrden": number,
+    "estado": string
+}
+                            </pre>
+                        </td>
+                        <td>Actualizar la interfaz de usuario para reflejar los cambios en el ítem.</td>
+                        <td>MESERO<br>COCINERO</td>
+                        <td></td>
+                    </tr>
+            </table>
+        </div>    
+
+    </body>
+</html>
