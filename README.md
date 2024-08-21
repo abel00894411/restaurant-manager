@@ -10,7 +10,7 @@ Restaurant Manager is a web-based application for effective order management in 
 - Fill orders with menu items, which are automatically assigned to cooks for preparation.
 - Order and item assignment is designed to balance the workload evenly among employees.
 - Cooks specialize in a menu category and will only be assigned items within their category.
-- Waiters can view the status of items in their assigned orders in real-time.
+- Waiters can view the status of items in their assigned orders in real time.
 - Customers can generate PDF invoices for their purchases.
 
 ## Technical details
@@ -20,6 +20,25 @@ A REST API was implemented using Spring Boot and Java. The Spring WebSocket depe
 The application's frontend was developed using React with both JavaScript and TypeScript. Singleton classes were implemented to manage WebSocket connections and data structures related to the features for the waiter and cook users.
 
 ## Screenshots
+
+*Menu*
+
+<img src="screenshots/menu.png" alt="Menu" width="511px" height="683px">
+
+
+*Admin dashboard*
+
+<img src="screenshots/admin-dashboard.png" alt="Admin dashboard" width="950px" height="456px">
+
+
+*Waiter orders*
+
+<img src="screenshots/waiter-orders.png" alt="Waiter orders" width="950px" height="456px">
+
+
+*Cook's kitchen*
+
+<img src="screenshots/cook.png" alt="Cook's kitchen" width="950px" height="456px">
 
 ## How to run it
 
